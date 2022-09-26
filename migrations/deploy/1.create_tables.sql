@@ -4,7 +4,7 @@
 BEGIN;
 
 CREATE DOMAIN ZIP AS TEXT CHECK (VALUE~'^[0-9]{5}$');
-CREATE DOMAIN MAIL AS TEXT CHECK (VALUE~'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+CREATE DOMAIN MAIL AS TEXT CHECK (VALUE~'^[\w\-\.]+@([\w-]+\.)+[\w-]{2,4}$');
 CREATE DOMAIN PHONE AS TEXT CHECK (VALUE~'^(\+33\s?|0)\d((\s|\.|\-|\_|)?\d{2}){3}(\3\d{2})$');
 
 
@@ -62,7 +62,7 @@ CREATE TABLE "role" (
     label TEXT NOT NULL
 );
 
-CREATE TABLE "sheet_has_categorie"(
+CREATE TABLE "sheet_has_categorie" (
     sheet_id int REFERENCES sheet(id),
     categorie_id int REFERENCES categorie(id)
 );
