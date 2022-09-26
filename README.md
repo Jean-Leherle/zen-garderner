@@ -1,7 +1,6 @@
-# Initialisation  #
+# Initialisation #
 
-
-## Conventional Commits
+## Conventional Commits ##
 
 Configuration: git commit -m ":gear: config: 'message here' "
 
