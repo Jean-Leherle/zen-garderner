@@ -9,7 +9,10 @@ const env = {
   },
   getPort: () => {
     return process.env.PORT||3001;
-  }
+  },
+  getCors: () => {
+    return process.env.CORS_DOMAINS?? '*';
+  } 
 }
 
 module.exports = env;
