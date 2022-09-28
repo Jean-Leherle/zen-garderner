@@ -1,0 +1,6 @@
+{
+    "ROUTES": {
+        "SESSION": "/session",
+        "USER": "/user"
+    }
+}

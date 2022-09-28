@@ -1,16 +1,13 @@
 const express = require('express');
 const app = express();
-const router = require('./routers');
 const cors = require('cors');
-// app.use(express.json());
-app.use(express.json());
 
-// permet l'utilisation de la méthode post avec lecture du body
-app.use(express.urlencoded({ extended: true }));
+const sessionRouter = require('./routers/sessionRouter');
 
-// Levé de la restriction CORS pour permettre la communication avec le front React.
-app.use(cors(process.env.CORS_DOMAINS ?? '*'));
-
-app.use(router);
+app
+  .use(express.urlencoded({ extended: true })) // permet l'encodage et la lecture du body
+  .use(express.json()) //permet l'utilisation des json dans le body
+  .use(cors(process.env.CORS_DOMAINS ?? '*')) // Levé de la restriction CORS pour permettre la communication avec le front React.
+  .use(sessionRouter);
 
 module.exports = app;
