@@ -20,15 +20,22 @@ const checkAuthorization = async (request, response, next) => {
         }
     }
 
+    console.log('token', token);
     // Check token is valid
-    const decodedToken = jwt.verify(token, env.getJwtSecret());
-
-    if (!decodedToken) {
-        return response.sendStatus(401);
+   
+    try {
+        const decodedToken = jwt.verify(token, env.getJwtSecret());
+        console.log('decodedToken', decodedToken);
+        if (!decodedToken) {
+            return response.sendStatus(401);
+        }
+    
+        request.decodedToken = decodedToken;
+        next();
+    }catch(error){
+        return response.sendStatus(498);
     }
-
-    request.decodedToken = decodedToken;
-    next();
+    
 };
 
 module.exports = checkAuthorization;
