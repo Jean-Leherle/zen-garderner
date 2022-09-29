@@ -11,8 +11,7 @@ const sessionController = {
         // Checking if user exists by email
         const user = await userModel.findByEmail(email);
         if (!user) {
-            response.sendStatus(401);
-            return;
+            return response.sendStatus(401);
         }
 
         // Checking user password
@@ -32,9 +31,11 @@ const sessionController = {
               // Sign JWT token
               const jwtToken = jwt.sign(payload, env.getJwtSecret());
 
-              // Sending token and user data as response
+              // Setting session cookie with token
+              request.session.token = jwtToken;
+
+              // Sending user data as response
               response.json({
-                token: jwtToken,
                 userData: user,
               });
             } else {
@@ -48,7 +49,7 @@ const sessionController = {
     },
 
     logout: (request, response) => {
-      response.sendStatus(200);
+      response.json(request.cookie);
     },
 }
 
