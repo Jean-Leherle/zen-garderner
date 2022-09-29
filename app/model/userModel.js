@@ -2,8 +2,18 @@ const client = require("../config/db");
 
 const userModel = {
   /**
-   * @param {string} email testé dans la bdd
-   * @param {user} user renvoyé en totalité
+   * Author model
+   *@typedef {object} User
+   *
+   *@property {integer} id.required - user identifier
+   *@property {string} pseudo.required - pseudo of user
+   *@property {string} email.required - email of user
+   *@property {string} adress - adress of user
+   *@property {string} zipcode - zip code of user's adress
+   *@property {string} city - city of user's adress
+   *@property {string} phone - phone number
+   *@property {boolean} task_notification - accept notification for each task all day
+   *@property {boolean} week_notification - accept notification of resume's task each week
    */
   findByEmail: async (email) => {
     const query = {

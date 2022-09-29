@@ -5,7 +5,23 @@ const passwordHashing = require("../utils/passwordHashing");
 const userModel = require('../model/userModel');
 
 const sessionController = {
-    login: async (request, response) => {
+  /**
+   * POST /session/
+   * @summary allow to login
+   * @param {object} request.body.required email and password 
+   * @example request - example
+   * {email : bob@bob.bob, password : 1234}
+   * @param {object} response Express response object 
+   * @returns {object} 200 - success response - application/json
+   * @example response - 200 - success reponse example 
+   * [
+   *   {
+   *    "token" : "cryptedtoken link to the user log",
+   * "userData": {"id": "1","pseudo": "bob","email": "bob@bob.bob", "adress": null, "zip_code": null, "city": null, "phone": null, "task_notification": true, "week_notification": false
+   *   }}
+   * ]
+   */
+   login: async (request, response) => {
         const { email, password } = request.body;
 
         // Checking if user exists by email
@@ -47,10 +63,19 @@ const sessionController = {
             response.sendStatus(500);
         }
     },
+  /**
+   * DELETE /session/
+   * @summary allow to logout
+   * @param {object} request.body header session's token
+   * @example request - example
+   * {Authorization : Bearer cryptedToken}
+   * @param {object} response Express response object
+   * @returns  200 - success response
+   */
+  logout: (request, response) => {
+    response.sendStatus(200);
+  },
 
-    logout: (request, response) => {
-      response.json(request.cookie);
-    },
 }
 
 module.exports = sessionController;
