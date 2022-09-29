@@ -17,7 +17,7 @@ const userController = {
       week_notification = true,
     } = request.body;
 
-    // Verification of information written by the member : password, email, zip_code
+    // Verification of information written by the member : password, email
 
     let error = "";
     if (!password) {
@@ -26,13 +26,12 @@ const userController = {
     if (password.length < 8) {
       error = "Le mot de passe est trop court";
     }
-    
     if (!email) {
       error = "L'email est obligatoire";
     }
 
     // check email is an email using regex
-    const emailRegex = ~'^(\+33\s?|0)\d((\s|\.|\-|\_|)?\d{2}){3}(\3\d{2})$'
+    const emailRegex = ~'^[\w\-\.]+@([\w-]+\.)+[\w-]{2,4}$'
     if(email ==! emailRegex) {
         error = "L'email n'est pas un email"
     }
@@ -52,13 +51,12 @@ const userController = {
   
     //  if the member is not registered, it is inserted in db
     if (!error) {
+        const hashedPassword = String(passwordHashing.hash(password));
         try {
-            const hashedPassword = passwordHashing.hash(password);
-            console.log(hashedPassword);
             const insertionUser = await userModel.insertUser({
               pseudo,
               email,
-              password,
+              password: hashedPassword,
               address,
               zip_code,
               city,

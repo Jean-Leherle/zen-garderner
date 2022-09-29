@@ -12,7 +12,7 @@ CREATE DOMAIN PHONE AS TEXT CHECK (VALUE~'^(\+33\s?|0)\d((\s|\.|\-|\_|)?\d{2}){3
 CREATE TABLE "user" (
     id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY UNIQUE,
     pseudo text NOT NULL,
-    email MAIL,
+    email MAIL NOT NULL UNIQUE,
     password text NOT NULL,
     address text,
     zip_code ZIP,
