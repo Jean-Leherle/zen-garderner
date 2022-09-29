@@ -18,9 +18,9 @@ const userModel = {
     } else {
       return null;
     };
-  }, 
+  },
 
-   findByPseudo: async (pseudo) => {
+  findByPseudo: async (pseudo) => {
     const query = {
       text: `SELECT * FROM "user" WHERE "pseudo" = $1;`,
       values: [pseudo],
@@ -32,23 +32,17 @@ const userModel = {
     } else {
       return null;
     };
-   },
+  },
 
   insertUser: async (pseudo, email, password, address, zip_code, city, phone, task_notification, week_notification) => {
     const insertQuery = {
       text: `INSERT INTO "user" ("pseudo", "email", "password", "address", "zip_code", 
       "city", "phone", "task_notification", "week_notification")
-      
-      VALUES('$1', '$2', '$3', '$4', '$5', '$6', '$7', '$8', '$9');`,
+      VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) returning "pseudo", "email", "address", "zip_code", 
+      "city", "phone", "task_notification", "week_notification";`,
       values: [pseudo, email, password, address, zip_code, city, phone, task_notification, week_notification],
     };
-
-    insertQuery.text =
-      `INSERT INTO "user"
-      ("pseudo", "email", "password", "address", "zip_code", "city", "phone", "task_notification", "week_notification") 
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
-
-    insertQuery.values = [ pseudo, email, password, address, zip_code, city, phone, task_notification, week_notification ];
+    
 
     const result = await client.query(insertQuery);
     console.log(result.rows);

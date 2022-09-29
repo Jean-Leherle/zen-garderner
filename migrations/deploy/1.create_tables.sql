@@ -14,7 +14,7 @@ CREATE TABLE "user" (
     pseudo text NOT NULL,
     email MAIL NOT NULL UNIQUE,
     password text NOT NULL,
-    address text,
+    adress text,
     zip_code ZIP,
     city text,
     phone PHONE, 

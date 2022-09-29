@@ -9,12 +9,12 @@ const userController = {
       pseudo,
       email,
       password,
-      address = '',
-      zip_code = '',
-      city = '',
-      phone = '',
-      task_notification = true,
-      week_notification = true,
+      address,
+      zip_code ,
+      city ,
+      phone ,
+      task_notification,
+      week_notification,
     } = request.body;
 
     // Verification of information written by the member : password, email
@@ -51,19 +51,20 @@ const userController = {
   
     //  if the member is not registered, it is inserted in db
     if (!error) {
-        const hashedPassword = String(passwordHashing.hash(password));
+        const hashedPassword = await passwordHashing.hash(password);
         try {
-            const insertionUser = await userModel.insertUser({
+          console.log(typeof(task_notification));
+            const insertionUser = await userModel.insertUser(
               pseudo,
               email,
-              password: hashedPassword,
+              hashedPassword,
               address,
               zip_code,
               city,
               phone,
               task_notification,
               week_notification,
-            });
+            );
             response.status(201).json(insertionUser);
         } catch (error) {
                 console.error(error);
