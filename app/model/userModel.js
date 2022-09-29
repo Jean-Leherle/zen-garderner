@@ -1,4 +1,4 @@
-const pool = require("../config/db");
+const client = require("../config/db");
 
 const userModel = {
   /**
@@ -11,9 +11,7 @@ const userModel = {
       values: [email],
     }
 
-    const client = await pool.connect();
     const result = await client.query(query);
-    client.release();
 
     if (result.rows.length > 0) {
       return result.rows[0];
