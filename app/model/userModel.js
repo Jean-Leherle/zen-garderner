@@ -19,14 +19,29 @@ const userModel = {
       return null;
     };
   }, 
+  
+   findByPseudo: async (pseudo) => {
+    const query = {
+      text: `SELECT * FROM "user" WHERE "pseudo" = $1;`,
+      values: [pseudo],
+    };
+    const result = await client.query(query);
 
-  insertUser: async (pseudo, email, password, week_notification, task_notification) => {
+    if (result.rows.length > 0) {
+      return result.rows[0];
+    } else {
+      return null;
+    };
+   },
+
+  insertUser: async (pseudo, email, password, adress, zip_code, city, phone, task_notification, week_notification) => {
     const insertQuery = {
-      text: `"user" ("pseudo", "email", "password", "adress", "zip_code", "city", "phone", 
-      "task_notification", "week_notification")
+      text: `INSERT INTO "user" ("pseudo", "email", "password", "address", "zip_code", 
+      "city", "phone", "task_notification", "week_notification")
       VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9);`,
       values: [pseudo, email, password, adress, zip_code, city, phone, week_notification, task_notification],
     };
+
     const result = await client.query(insertQuery);
     const insertedUser = result.rows[0];
     return insertedUser;

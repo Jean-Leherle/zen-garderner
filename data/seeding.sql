@@ -2,7 +2,7 @@
 -- SQLBook: Code
 BEGIN;
 
-INSERT INTO "user" ("pseudo", "email", "password", "adress", "zip_code", "city", "phone", "task_notification", "week_notification") 
+INSERT INTO "user" ("pseudo", "email", "password", "address", "zip_code", "city", "phone", "task_notification", "week_notification") 
 VALUES('Clo', 'cloclo@cloclo.fr', '12345', '3 rue des figues', '10000', 'Troyes', '06-32-15-30-96','true','true'),
 ('Gérard', 'gege@alo.fr', 'azert', '2 rue du pli', '75001', 'Paris','06-33-16-31-97','true','false');
 

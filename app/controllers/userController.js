@@ -4,38 +4,75 @@ const userModel = require("../model/userModel");
 
 const userController = {
   register: async (request, response) => {
-    const data = request.body;
+    // TODO : Using joi ? https://joi.dev/api/?v=17.6.1
+    const {
+      pseudo,
+      email,
+      password,
+      address = '',
+      zip_code = '',
+      city = '',
+      phone = '',
+      task_notification = true,
+      week_notification = true,
+    } = request.body;
 
-//Verification of information written by the member
+    // Verification of information written by the member : password, email, zip_code
 
     let error = "";
-    if (!data.password) {
+    if (!password) {
       error = "Le mot de passe est obligatoire";
-    };
-
-    if (data.password !== data.passwordConfirm) {
-      error = "Le mot de passe ne correspond pas";
-    };
-    
-    if (data.password.length < 8) {
+    }
+    if (password.length < 8) {
       error = "Le mot de passe est trop court";
-    };
+    }
     
-    if (!data.email) {
+    if (!email) {
       error = "L'email est obligatoire";
-    };
+    }
 
-    if (isNaN(data.zip_code) == false && data.zip_code.length < 6 || data.zip_code.length > 6){
-        error = "Le code postal doit être composé de 6 chiffres";
-    };
+    // check email is an email using regex
+    const emailRegex = ~'^(\+33\s?|0)\d((\s|\.|\-|\_|)?\d{2}){3}(\3\d{2})$'
+    if(email ==! emailRegex) {
+        error = "L'email n'est pas un email"
+    }
+    
+    // check if pseudo is unique
+
+    const pseudoUnique = await userModel.findByPseudo(pseudo);
+    if (pseudoUnique) {
+        error = "Pseudo déjà utilisé"
+    }
 
     // Checking if the member is not already registered
-
+    const resultUser = await userModel.findByEmail(email);
+    if (resultUser) {
+        error = "Email déjà utilisé";
+    }
+  
     //  if the member is not registered, it is inserted in db
-
-    // 
-
-  },
+    if (!error) {
+        try {
+            const hashedPassword = passwordHashing.hash(password);
+            console.log(hashedPassword);
+            const insertionUser = await userModel.insertUser({
+              pseudo,
+              email,
+              password,
+              address,
+              zip_code,
+              city,
+              phone,
+              task_notification,
+              week_notification,
+            });
+            response.status(201).json(insertionUser);
+        } catch (error) {
+                console.error(error);
+                response.sendStatus(500);
+            }
+        };
+    }
 };
 
 module.exports = userController;
