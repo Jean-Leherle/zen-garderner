@@ -4,38 +4,26 @@ const env = require('../config/env.js');
 
 /** Checks authorization token (JWT) from Authorization header */
 const checkAuthorization = async (request, response, next) => {
-    let token = request.headers.authorization;
+    const token = request.session?.token;
 
-    // Checking token has been sent in headers
+    // Check token has been sent
     if (!token) {
         return response.sendStatus(401);
     }
 
-    // Checking bearer and removing
-    if (token.startsWith('Bearer ')) {
-        // Remove Bearer from string
-        token = token.slice(7, token.length);
-        if (!token || token === '') {
-            return response.sendStatus(401);
-        }
-    }
-
-    console.log('token', token);
     // Check token is valid
-   
     try {
         const decodedToken = jwt.verify(token, env.getJwtSecret());
-        console.log('decodedToken', decodedToken);
-        if (!decodedToken) {
-            return response.sendStatus(401);
-        }
-    
+
+        // Token is valid => storing decodedToken in request to access user ID in controllers
+        // From a controller : request.decodedToken.user_id
         request.decodedToken = decodedToken;
         next();
-    }catch(error){
-        return response.sendStatus(498);
+    } catch (error) {
+        // Token is expired, invalid
+        console.log(error);
+        response.sendStatus(401); // HTTP 498 is an nginx reserved code, not standard
     }
-    
 };
 
 module.exports = checkAuthorization;
