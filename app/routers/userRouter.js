@@ -7,7 +7,7 @@ const ROUTES = require('../config').ROUTES;
 const userRouter = express.Router();
 
 userRouter
-  //.get(ROUTES.USER, checkAuthorization, userController.getProfile)
+  .get(ROUTES.USER, checkAuthorization, userController.getProfile)
   .post(ROUTES.USER, userController.register)
   //.put(ROUTES.USER, checkAuthorization, userController.updateProfile)
 

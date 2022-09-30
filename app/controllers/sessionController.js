@@ -63,6 +63,7 @@ const sessionController = {
             response.sendStatus(500);
         }
     },
+
   /**
    * DELETE /session/
    * @summary allow to logout
@@ -75,7 +76,6 @@ const sessionController = {
   logout: (request, response) => {
     response.sendStatus(200);
   },
-
 }
 
 module.exports = sessionController;
