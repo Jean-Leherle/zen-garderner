@@ -74,6 +74,7 @@ const sessionController = {
    * @returns  200 - success response
    */
   logout: (request, response) => {
+    request.session.destroy();
     response.sendStatus(200);
   },
 }
