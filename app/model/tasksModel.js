@@ -26,5 +26,11 @@ const tasksModel = {
       return null;
     };
   },
+  addTasks: async (userId, tasks)=>{
+    const query = {
+      text: `INSERT INTO "task" ("label", "begin_date", "limit_date", "user_id", "sheet_id") VALUES($1, $2, $3, $4, $5);`,
+      values: [tasks.label, tasks.beginDate, tasks.limitDate,userId, tasks.sheetId ],
+    };
+  }
 };
 module.exports = tasksModel;
