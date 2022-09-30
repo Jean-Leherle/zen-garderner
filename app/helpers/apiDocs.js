@@ -17,7 +17,7 @@ const options = {
   exposeApiDocs: true,
   apiDocsPath: '/api/docs',
 };
-
+// https://brikev.github.io/express-jsdoc-swagger-docs/#/README
 /**
  * Swagger middleware factory
  * @param {object} app Express application
