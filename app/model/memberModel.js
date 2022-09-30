@@ -1,6 +1,6 @@
 const client = require("../config/db");
 
-const userModel = {
+const memberModel = {
   /**
    * Author model
    *@typedef {object} User
@@ -52,14 +52,10 @@ const userModel = {
       "city", "phone", "task_notification", "week_notification";`,
       values: [pseudo, email, password, address, zip_code, city, phone, task_notification, week_notification],
     };
-    
-
     const result = await client.query(insertQuery);
-    console.log(result.rows);
-
     const insertedUser = result.rows[0];
     return insertedUser;
   }
 };
 
-module.exports = userModel;
+module.exports = memberModel;

@@ -1,8 +1,8 @@
 const env = require("../config/env.js");
 const passwordHashing = require("../utils/passwordHashing");
-const userModel = require("../model/userModel");
+const memberModel = require("../model/memberModel");
 
-const userController = {
+const memberController = {
   register: async (request, response) => {
     // TODO : Using joi ? https://joi.dev/api/?v=17.6.1
     const {
@@ -11,8 +11,8 @@ const userController = {
       password,
       address,
       zip_code ,
-      city ,
-      phone ,
+      city,
+      phone,
       task_notification,
       week_notification,
     } = request.body;
@@ -38,13 +38,13 @@ const userController = {
     
     // check if pseudo is unique
 
-    const pseudoUnique = await userModel.findByPseudo(pseudo);
+    const pseudoUnique = await memberModel.findByPseudo(pseudo);
     if (pseudoUnique) {
         error = "Pseudo déjà utilisé"
     }
 
     // Checking if the member is not already registered
-    const resultUser = await userModel.findByEmail(email);
+    const resultUser = await memberModel.findByEmail(email);
     if (resultUser) {
         error = "Email déjà utilisé";
     }
@@ -53,8 +53,7 @@ const userController = {
     if (!error) {
         const hashedPassword = await passwordHashing.hash(password);
         try {
-          console.log(typeof(task_notification));
-            const insertionUser = await userModel.insertUser(
+            const insertionUser = await memberModel.insertUser(
               pseudo,
               email,
               hashedPassword,
@@ -71,7 +70,14 @@ const userController = {
                 response.sendStatus(500);
             }
         };
-    }
+    }, 
+
+    getProfile: async (request, response) => {
+      const {email} = request.body;
+
+
+
+    },
 };
 
-module.exports = userController;
+module.exports = memberController;

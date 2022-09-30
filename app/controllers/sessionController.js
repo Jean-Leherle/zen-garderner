@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const env = require('../config/env.js');
 const passwordHashing = require("../utils/passwordHashing");
-const userModel = require('../model/userModel');
+const memberModel = require('../model/memberModel');
 
 const sessionController = {
   /**

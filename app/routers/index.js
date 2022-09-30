@@ -1,9 +1,9 @@
 const express = require('express');
 const sessionRouter = require("./sessionRouter");
-const userRouter = require("./userRouter");
+const memberRouter = require("./memberRouter");
 const router = express.Router();
 
 router.use(sessionRouter);
-router.use(userRouter);
+router.use(memberRouter);
 
 module.exports = router;
