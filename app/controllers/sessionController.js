@@ -63,6 +63,23 @@ const sessionController = {
             response.sendStatus(500);
         }
     },
+
+    cookieLogin: async (request, response) => {
+      const { id } = request.session;
+      if (!id) {
+        return response.sendStatus(400);
+      }
+  
+      const user = await userModel.findById(id);
+      if (!user) {
+        return response.sendStatus(401);
+      }
+  
+      response.send({
+        userData
+      })
+    },
+
   /**
    * DELETE /session/
    * @summary allow to logout
@@ -75,7 +92,6 @@ const sessionController = {
   logout: (request, response) => {
     response.sendStatus(200);
   },
-
 }
 
 module.exports = sessionController;

@@ -19,7 +19,7 @@ const env = {
   getCors: () => {
     return process.env.CORS_DOMAINS?? '*';
   },
-  getDocumentationRoute: ()=>{
+  getDocumentationRoute: () => {
     return process.env.API_DOCUMENTATION_ROUTE
   }
 }

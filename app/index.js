@@ -4,9 +4,9 @@ const cors = require('cors');
 
 const routerIndex = require('./routers/index');
 const env = require('./config/env');
-require('./helpers/apiDocs')(app);
 
 const app = express();
+require('./helpers/apiDocs')(app);
 app
   .use(express.urlencoded({ extended: true })) // permet l'encodage et la lecture du body
   .use(express.json()) // permet l'utilisation des json dans le body
