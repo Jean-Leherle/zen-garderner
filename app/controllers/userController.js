@@ -74,7 +74,7 @@ const userController = {
     },
     
     getProfile: async (request, response) => {
-        const id = request.session.decodedToken.user_id;
+        const id = request.decodedToken.user_id;
         if (!id) {
           return response.sendStatus(400);
         }
