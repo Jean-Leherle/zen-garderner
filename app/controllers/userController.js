@@ -74,18 +74,20 @@ const userController = {
     },
     
     getProfile: async (request, response) => {
-        const { id } = request.session;
-        if (!id) {
+        const { id: user_id } = request.session.decodedToken;
+        if (!user_id) {
           return response.sendStatus(400);
         }
     
-        const user = await userModel.findById(id);
+        const user = await userModel.findById(user_id);
         if (!user) {
           return response.sendStatus(401);
         }
+        
+        delete user.password;
     
         response.send({
-          userData
+          userData: user,
         });
     },
 };
