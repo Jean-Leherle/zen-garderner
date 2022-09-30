@@ -63,7 +63,7 @@ const userController = {
               city,
               phone,
               task_notification,
-              week_notification,
+              week_notification
             );
             response.status(201).json(insertionUser);
         } catch (error) {

@@ -2,15 +2,13 @@
 
 BEGIN;
 
-ALTER TABLE "USER" 
+ALTER TABLE "user" 
 RENAME COLUMN "adress" TO "address";
-ALTER TABLE "USER"
-ALTER COLUMN "email" UNIQUE NOT NULL;
 
-ALTER TABLE "USER"
-ALTER COLUMN "task_notification" BOOLEAN NOT NULL;
-ALTER TABLE "USER"
-ALTER COLUMN "week_notification" BOOLEAN NOT NULL;
+ALTER TABLE "user"
+ALTER COLUMN "task_notification" set NOT NULL;
+ALTER TABLE "user"
+ALTER COLUMN "week_notification" set NOT NULL;
 
 COMMIT;
 
