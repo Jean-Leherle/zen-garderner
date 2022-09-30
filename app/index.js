@@ -20,7 +20,8 @@ app
     },
   }))
   .use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+    next();
   })
   //.use(cors({ origin: "*" })) // Levé de la restriction CORS pour permettre la communication avec le front React.
   .use(routerIndex);
