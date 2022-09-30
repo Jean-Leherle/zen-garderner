@@ -21,6 +21,7 @@ app
   }))
   .use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+    res.setHeader('Access-Control-Allow-Credentials', true);
     next();
   })
   //.use(cors({ origin: "*" })) // Levé de la restriction CORS pour permettre la communication avec le front React.
