@@ -75,11 +75,11 @@ const userController = {
     
     getProfile: async (request, response) => {
         const id = request.session.decodedToken.user_id;
-        if (!user_id) {
+        if (!id) {
           return response.sendStatus(400);
         }
     
-        const user = await userModel.findById(user_id);
+        const user = await userModel.findById(id);
         if (!user) {
           return response.sendStatus(401);
         }
