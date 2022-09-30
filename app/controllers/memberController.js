@@ -1,6 +1,8 @@
 const env = require("../config/env.js");
 const passwordHashing = require("../utils/passwordHashing");
 const memberModel = require("../model/memberModel");
+const sessionController = require("./sessionController.js");
+const { findById } = require("../model/memberModel.js");
 
 const memberController = {
   register: async (request, response) => {
@@ -76,11 +78,56 @@ const memberController = {
     }, 
 
     getProfile: async (request, response) => {
-      const {email} = request.body;
+      //
+      const user_id = request.decodedToken.user_id;
 
-
-
+      //find the informations of the user connected 
+      
+      const user = await memberModel.findById(user_id);
+     //console.log(user);
+     
+     //if the user exist in th db send a status 200, if isn't the db satus 401
+      if(user) {
+        response.sendStatus(200);
+       } else {
+        response.sendStatus(401);
+       }
     },
+
+  updateProfile: async (request, response) => {
+    const user_id = request.decodedToken.user_id;
+    const {
+      pseudo,
+      email,
+      password,
+      address,
+      zip_code ,
+      city,
+      phone,
+      task_notification,
+      week_notification,
+    } = request.body;
+
+    //find the user connected and get all of her informations 
+    const user = await memberModel.findById(user_id);
+    if(user) {
+      const userUpdate = await memberModel.updateUser(
+          pseudo,
+          email,
+          password,
+          address,
+          zip_code ,
+          city,
+          phone,
+          task_notification,
+          week_notification,
+      );
+      response.status(201).json(userUpdate);
+    } else {
+      response.sendStatus(404)
+    };
+  },
+
 };
 
 module.exports = memberController;

@@ -22,7 +22,19 @@ const memberModel = {
     };
 
     const result = await client.query(query);
-
+  
+    if (result.rows.length > 0) {
+      return result.rows[0];
+    } else {
+      return null;
+    };
+  },
+  findById: async (id) => {
+    const query = {
+      text: `SELECT * FROM "user" WHERE "id" = $1;`,
+      values: [id],
+    };
+    const result = await client.query(query);
     if (result.rows.length > 0) {
       return result.rows[0];
     } else {
@@ -48,13 +60,27 @@ const memberModel = {
     const insertQuery = {
       text: `INSERT INTO "user" ("pseudo", "email", "password", "address", "zip_code", 
       "city", "phone", "task_notification", "week_notification")
-      VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) returning "pseudo", "email", "address", "zip_code", 
+      VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "pseudo", "email", "address", "zip_code", 
       "city", "phone", "task_notification", "week_notification";`,
       values: [pseudo, email, password, address, zip_code, city, phone, task_notification, week_notification],
     };
     const result = await client.query(insertQuery);
     const insertedUser = result.rows[0];
     return insertedUser;
+  },
+
+  updateUser: async(pseudo, email, password, address, zip_code, city, phone, task_notification, week_notification, id) => {
+    const updateQuery = {
+      text: `UPDATE "user" SET "pseudo"=$1, "email"=$2, "password"=$3, "address"=$4, "zip_code"=$5, 
+      "city"=$6, "phone"=$7, "task_notification"=$8, "week_notification"=$9
+      WHERE "id"= $10`,
+
+      values: [pseudo, email, password, address, zip_code, city, phone, task_notification, week_notification, id],
+    };
+    const result = await client.query(updateQuery);
+    const updateUser = result.rows[0];
+    console.log(updateUser);
+    return updateUser;
   }
 };
 
