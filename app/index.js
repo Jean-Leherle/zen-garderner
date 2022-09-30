@@ -2,8 +2,8 @@ const express = require('express');
 const session = require('express-session');
 const cors = require('cors');
 
+const routerIndex = require('./routers/index');
 const env = require('./config/env');
-const sessionRouter = require('./routers/sessionRouter');
 
 const app = express();
 require('./helpers/apiDocs')(app);
@@ -20,7 +20,7 @@ app
     },
   }))
   .use(cors(env.getCors())) // Levé de la restriction CORS pour permettre la communication avec le front React.
-  .use(sessionRouter);
+  .use(routerIndex);
 
 
 module.exports = app;
