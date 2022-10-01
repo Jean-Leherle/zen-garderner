@@ -31,27 +31,47 @@ const tasksController = {
   */
   getAll: async (request, response) => {
     const userId = request.decodedToken.user_id;
-    const tasksList = await tasksModel.findByUserId(userId)
-    if (!tasksList) {
+    let result
+    try{
+      result = await tasksModel.findByUserId(userId)
+    }catch(error){
+      console.log(error);
+      response.status(500).send(error)
+      return
+    }
+    if (!result) {
       response.sendStatus(204)
       return
     }
 
 
-    response.status(201).json(tasksList)
+    response.status(201).json(result)
   },
 
   postNewTasks: async (request, response) => {
     const userId = request.decodedToken.user_id;
     //const tasks = request.body.tasks
-    const tasks = {
+    /* const tasks = {
       label: "recolte des carottes",
       begin_date: "2022-10-05T22:00:00.000Z",
       limit_date: "2022-11-06T22:00:00.000Z",
-      user_id: 3,
       sheet_id: null
+    } */
+    const tasks= request.body
+
+    let result
+    try{
+      result = await tasksModel.addTasks(userId, tasks)
+    }catch(error){
+      console.log(error);
+      response.status(500).send(error)
+      return
     }
-    const result = await tasksModel.addTasks(userId, tasks)
+    if (!result){
+      response.sendStatus(404)
+      return
+    }
+    response.status(201).json(result)
 
   }
   //renvoyer tout dont cheats_id 

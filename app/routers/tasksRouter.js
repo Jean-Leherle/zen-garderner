@@ -7,5 +7,7 @@ const tasksRouter = express.Router();
 
 tasksRouter
   .get('/', checkAuthorization,tasksController.getAll)
+  .post('/', checkAuthorization,tasksController.postNewTasks)  
+
 
 module.exports = tasksRouter;

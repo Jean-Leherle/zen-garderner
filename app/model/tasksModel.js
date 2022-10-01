@@ -28,8 +28,15 @@ const tasksModel = {
   },
   addTasks: async (userId, tasks)=>{
     const query = {
-      text: `INSERT INTO "task" ("label", "begin_date", "limit_date", "user_id", "sheet_id") VALUES($1, $2, $3, $4, $5);`,
+      text: `INSERT INTO "task" ("label", "begin_date", "limit_date", "user_id", "sheet_id") VALUES($1, $2, $3, $4, $5) returning *;`,
       values: [tasks.label, tasks.beginDate, tasks.limitDate,userId, tasks.sheetId ],
+    };
+    const result = await client.query(query);
+
+    if (result.rows.length > 0) {
+      return result.rows;
+    } else {
+      return null;
     };
   }
 };
