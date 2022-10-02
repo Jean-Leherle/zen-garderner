@@ -1,0 +1,34 @@
+// data verification send by a new visitor to want to register
+const Joi = require('joi');
+
+// variables for the different regex :  email, phone and zip_code
+const regexEmail = '^[a-zA-Z0-9_.]+@([a-zA-Z0-9_-]+.)+[a-zA-Z0-9_-]{2,4}$';
+const regexZipCode= '^[0-9]{5}$';
+const regexPhone= '^(\[+33]\s?|0)\d((\s|\.|\-|\_|)?\d{2}){3}(\3\d{2})$'
+
+// creating a schema to validate the value 
+const memberSchemaRegister = Joi.object({
+    pseudo: Joi.string().required(),
+    email: Joi.string().regex(new RegExp(regexEmail)).required(),
+    password:Joi.string().min(8).required(),
+    repeat_password: Joi.ref('password'),
+    address: Joi.string(),
+    zip_code: Joi.string().pattern(new RegExp(regexZipCode)),
+    city: Joi.string(),
+    phone: Joi.string().pattern(new RegExp(regexPhone)),
+    task_notification: Joi.boolean().required(),
+    week_notification: Joi.boolean().required()
+});
+
+const memberSchemaUpdate = Joi.object({
+    pseudo: Joi.string().required(),
+    email: Joi.string().regex(new RegExp(regexEmail)).required(),
+    address: Joi.string(),
+    zip_code: Joi.string().pattern(new RegExp(regexZipCode)),
+    city: Joi.string(),
+    phone: Joi.string().pattern(new RegExp(regexPhone)),
+    task_notification: Joi.boolean().required(),
+    week_notification: Joi.boolean().required()
+}); 
+
+module.exports = {memberSchemaRegister, memberSchemaUpdate};

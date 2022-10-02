@@ -1,58 +1,41 @@
 const env = require("../config/env.js");
 const passwordHashing = require("../utils/passwordHashing");
 const memberModel = require("../model/memberModel");
-const sessionController = require("./sessionController.js");
-const { updateUser } = require("../model/memberModel");
+const { memberSchemaRegister, memberSchemaUpdate } = require("../validation/memberSchema.js");
 
 const memberController = {
   register: async (request, response) => {
-    // TODO : Using joi ? https://joi.dev/api/?v=17.6.1
     const {
       pseudo,
       email,
       password,
+      repeat_password,
       address,
-      zip_code ,
+      zip_code,
       city,
       phone,
       task_notification,
       week_notification,
     } = request.body;
-
-    // Verification of information written by the member : password, email
-
-    let error = "";
-    if (!password) {
-      error += "Le mot de passe est obligatoire";
-    }
-    if (password.length < 8) {
-      error += "Le mot de passe est trop court";
-    }
-    if (!email) {
-      error += "L'email est obligatoire";
-    }
-
-    // check email is an email using regex
-    const emailRegex = ~'^[\w\-\.]+@([\w-]+\.)+[\w-]{2,4}$'
-    if(email ==! emailRegex) {
-        error += "L'email n'est pas un email"
-    }
+    
+    // use the schema create with Joi to verificate the data send by the new user 
+    const {error} = await memberSchemaRegister.validate(request.body);
     
     // check if pseudo is unique
-
+    let errorDb = ""
     const pseudoUnique = await memberModel.findByPseudo(pseudo);
     if (pseudoUnique) {
-        error += "Pseudo déjà utilisé"
-    }
+         errorDb += "Pseudo déjà utilisé // "
+     }
 
     // Checking if the member is not already registered
     const resultUser = await memberModel.findByEmail(email);
     if (resultUser) {
-        error += "Email déjà utilisé";
-    }
+     errorDb += "Email déjà utilisé";
+     }
   
     //  if the member is not registered, it is inserted in db
-    if (!error) {
+    if (!error && !errorDb) {
         const hashedPassword = await passwordHashing.hash(password);
         try {
             const insertionUser = await memberModel.insertUser(
@@ -72,9 +55,8 @@ const memberController = {
                 response.sendStatus(500);
             }
         } else {
-          response.sendStatus(404);
-          response.json(error);
-        };
+          response.status(401).send(error.details[0].message).send(errorDb);
+      };
     }, 
 
     getProfile: async (request, response) => {
@@ -84,7 +66,6 @@ const memberController = {
       //find the informations of the user connected 
       
       const user = await memberModel.findById(user_id);
-     //console.log(user);
      
      //if the user exist in th db send a status 200, if isn't the db satus 401
       if(user) {
@@ -107,24 +88,31 @@ const memberController = {
       week_notification,
       id
     } = request.body;
-
+    
     //find the user connected and get all of her informations 
     const user = await memberModel.findById(user_id);
+    
+    // use the schema create with Joi to verificate the updated data
+    const {error} = memberSchemaUpdate.validate(request.body);
+    if(error){
+      response.send(error.details[0].message);
+    }
+  
+    // if the user exist and, the data are validated, the data from the member are updated 
     if(user) {
       const userUpdate = await memberModel.updateUser(
            pseudo,
            email,
            address,
-            zip_code ,
+           zip_code ,
            city,
            phone,
            task_notification,
            week_notification,
            id);
-          
-      response.status(201).send({userUpdate});
+      response.status(201).send(userUpdate);
     } else {
-      response.sendStatus(404)
+      response.status(401);
     };
   }
 

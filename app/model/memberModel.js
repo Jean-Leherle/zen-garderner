@@ -80,7 +80,6 @@ const memberModel = {
     };
     const result = await client.query(updateQuery);
     const updateUser = result.rows[0];
-    console.log("datamapper update user", updateUser)
     return updateUser;
   }
 };
