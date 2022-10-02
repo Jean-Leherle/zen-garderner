@@ -7,7 +7,8 @@ const tasksRouter = express.Router();
 
 tasksRouter
   .get('/', checkAuthorization,tasksController.getAll)
-  .post('/', checkAuthorization,tasksController.postNewTasks)  
+  .post('/', checkAuthorization,tasksController.postNewTasks)
+  .delete('/:tasksId', checkAuthorization, tasksController.deleteTasks)  
 
 
 module.exports = tasksRouter;

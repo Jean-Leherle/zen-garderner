@@ -38,6 +38,14 @@ const tasksModel = {
     } else {
       return null;
     };
+  },
+  deleteTasks : async(id, userId)=>{
+    const query = {
+      text: `DELETE * FROM "tasks" where id = $1 AND user_id = $2;`,
+      values: [id, userId]
+    };
+    const result = await client.query(query);
+    console.log(result);
   }
 };
 module.exports = tasksModel;
