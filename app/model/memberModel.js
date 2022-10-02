@@ -69,17 +69,18 @@ const memberModel = {
     return insertedUser;
   },
 
-  updateUser: async(pseudo, email, password, address, zip_code, city, phone, task_notification, week_notification, id) => {
+  updateUser: async(pseudo, email, address, zip_code, city, phone, task_notification, week_notification, id) => {
     const updateQuery = {
-      text: `UPDATE "user" SET "pseudo"=$1, "email"=$2, "password"=$3, "address"=$4, "zip_code"=$5, 
-      "city"=$6, "phone"=$7, "task_notification"=$8, "week_notification"=$9
-      WHERE "id"= $10`,
+      text: `UPDATE "user" SET "pseudo"=$1, "email"=$2, "address"=$3, "zip_code"=$4, 
+      "city"=$5, "phone"=$6, "task_notification"=$7, "week_notification"=$8
+      WHERE "id"= $9 RETURNING "pseudo", "email", "address", "zip_code", 
+      "city", "phone", "task_notification", "week_notification"`,
 
-      values: [pseudo, email, password, address, zip_code, city, phone, task_notification, week_notification, id],
+      values: [pseudo, email, address, zip_code, city, phone, task_notification, week_notification, id],
     };
     const result = await client.query(updateQuery);
     const updateUser = result.rows[0];
-    console.log(updateUser);
+    console.log("datamapper update user", updateUser)
     return updateUser;
   }
 };

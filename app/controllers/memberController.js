@@ -2,7 +2,7 @@ const env = require("../config/env.js");
 const passwordHashing = require("../utils/passwordHashing");
 const memberModel = require("../model/memberModel");
 const sessionController = require("./sessionController.js");
-const { findById } = require("../model/memberModel.js");
+const { updateUser } = require("../model/memberModel");
 
 const memberController = {
   register: async (request, response) => {
@@ -88,7 +88,7 @@ const memberController = {
      
      //if the user exist in th db send a status 200, if isn't the db satus 401
       if(user) {
-        response.sendStatus(200);
+        response.status(201).send(user);
        } else {
         response.sendStatus(401);
        }
@@ -99,34 +99,34 @@ const memberController = {
     const {
       pseudo,
       email,
-      password,
       address,
       zip_code ,
       city,
       phone,
       task_notification,
       week_notification,
+      id
     } = request.body;
 
     //find the user connected and get all of her informations 
     const user = await memberModel.findById(user_id);
     if(user) {
       const userUpdate = await memberModel.updateUser(
-          pseudo,
-          email,
-          password,
-          address,
-          zip_code ,
-          city,
-          phone,
-          task_notification,
-          week_notification,
-      );
-      response.status(201).json(userUpdate);
+           pseudo,
+           email,
+           address,
+            zip_code ,
+           city,
+           phone,
+           task_notification,
+           week_notification,
+           id);
+          
+      response.status(201).send({userUpdate});
     } else {
       response.sendStatus(404)
     };
-  },
+  }
 
 };
 
