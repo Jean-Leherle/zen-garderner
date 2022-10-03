@@ -44,7 +44,7 @@ const sessionController = {
         };
 
         // Sign JWT token
-        const jwtToken = jwt.sign(payload, env.getJwtSecret());
+        const jwtToken = jwt.sign(payload, `${env.getJwtSecret()}`);
 
         // Setting session cookie with token
         request.session.token = jwtToken;
