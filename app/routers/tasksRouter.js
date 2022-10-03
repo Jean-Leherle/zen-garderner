@@ -9,6 +9,7 @@ tasksRouter
   .get('/', checkAuthorization,tasksController.getAll)
   .post('/', checkAuthorization,tasksController.postNewTasks)
   .delete('/:tasksId', checkAuthorization, tasksController.deleteTasks)  
-
+  .put('/:tasksId', checkAuthorization, tasksController.updateTasks)
+  .get('/:tasksId', checkAuthorization, tasksController.getOneTasks)
 
 module.exports = tasksRouter;
