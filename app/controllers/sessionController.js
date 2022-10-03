@@ -24,7 +24,7 @@ const sessionController = {
     const { email, password } = request.body;
 
     // Checking if user exists by email
-    const user = await userModel.findByEmail(email);
+    const user = await memberModel.findByEmail(email);
     if (!user) {
       return response.sendStatus(401);
     }
@@ -44,7 +44,7 @@ const sessionController = {
         };
 
         // Sign JWT token
-        const jwtToken = jwt.sign(payload, env.getJwtSecret());
+        const jwtToken = jwt.sign(payload, `${env.getJwtSecret()}`);
 
         // Setting session cookie with token
         request.session.token = jwtToken;
