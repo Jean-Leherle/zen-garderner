@@ -1,6 +1,7 @@
 {
     "ROUTES": {
         "SESSION": "/session",
+        "TASKS": "/tasks",
         "MEMBER": "/member"
     }
 }

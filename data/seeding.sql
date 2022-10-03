@@ -8,13 +8,15 @@ VALUES('Clo', 'cloclo@cloclo.fr', '12345', '3 rue des figues', '10000', 'Troyes'
 ('Gérard', 'gege@alo.fr', 'azert', '2 rue du pli', '75001', 'Paris','06-33-16-31-97','true','false');
 
 
-
 INSERT INTO "sheet" ("title", "photo", "description", "caracteristique")
 VALUES('carotte orange', 'carotte_orange.png', 'lorem ipsum', 'lorem ipsum'),
 ('courgette', 'courgette.png', 'lorem ipsum', 'lorem ipsum');
+
 INSERT INTO "task" ("label", "begin_date", "limit_date", "user_id", "sheet_id") 
-VALUES('arrosage carotte', '06/06/2023', '07/06/2023', 1, 1), 
+VALUES('arrosage carotte', '06/06/2023', '07/06/2023', 1, 1),
+('couper la haie', '04/10/2022', '10/10/2022', 1, NULL),  
 ('arrosage courgette', '08/06/2023', '09/06/2023', 2, 2);
+
 INSERT INTO "categorie" ("label")
 VALUES('fruits'),('légumes');
 INSERT INTO "action"("label", "month_begin", "month_limit", "sheet_id")

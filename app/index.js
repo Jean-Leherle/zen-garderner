@@ -19,7 +19,11 @@ app
         httpOnly: true,
     },
   }))
-  .use(cors(env.getCors())) // removing restrictions to allow communication with the front (react)
+
+  .use(cors("*")) // Levé de la restriction CORS pour permettre la communication avec le front React.
+
+  //.use(cors(env.getCors())) // removing restrictions to allow communication with the front (react)
+
   .use(routerIndex);
 
 
