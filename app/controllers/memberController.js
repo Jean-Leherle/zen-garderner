@@ -6,17 +6,15 @@ const { memberSchemaRegister, memberSchemaUpdate } = require("../validation/memb
  /**
    * POST /member/
    * @summary allow to register a new member
-   * @param {object} request.body.required email and password 
+   * @param {object} request.body.required email, password, repeat_password, task_notification, week_notification
+   * @param {object} request.body pseudo, email, password, repeat_password, address, zip_code, city, phone, task_notification, week_notification,
    * @example request - example
-   * {email : bob@bob.bob, password : 1234}
+   * {pseudo: bob, email : bob@bob.bob, password : 1234, repeat_password: 1234, address: 5 rue de paris, zip_code: 26666, city: paris, phone:06-06-06-06-06, task_notification: true, week_notification: true }
    * @param {object} response Express response object 
    * @returns {object} 200 - success response - application/json
    * @example response - 200 - success reponse example 
-   * [
-   *   {
-   *    "token" : "cryptedtoken link to the user log",
-   * "userData": {"id": "1","pseudo": "bob","email": "bob@bob.bob", "adress": null, "zip_code": null, "city": null, "phone": null, "task_notification": true, "week_notification": false
-   *   }}
+   *   {"pseudo": "bob","email": "bob@bob.bob", "adress": "5 rue de paris", "zip_code": "26666", "city": "paris", "phone": "06-06-06-06-06", "task_notification": true, "week_notification": true
+   *   }
    * ]
    */
 
@@ -102,7 +100,7 @@ const memberController = {
        }
     },
 /**
-   * POST /member/
+   * PUT /member/
    * @summary allow to the member to update her profile 
    * @param {object} request.body.required email and password
    * @param {object} request.decodedToken.user_id
