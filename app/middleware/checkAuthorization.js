@@ -4,11 +4,11 @@ const env = require('../config/env.js');
 
 /** Checks authorization token (JWT) from Authorization header */
 const checkAuthorization = async (request, response, next) => {
-    console.log('checkAuthorization', 'session', request.session);
-    console.log('checkAuthorization', 'token', request.session?.token);
+    // console.log('checkAuthorization', 'session', request.session);
+    // console.log('checkAuthorization', 'token', request.session?.token);
     // const token = request.session?.token;
 
-    const token = request.get("Authorization").substring(7)
+    let token = request.get("Authorization")
     console.log(token)
 
 
@@ -20,6 +20,7 @@ const checkAuthorization = async (request, response, next) => {
 
     // Check token is valid
     try {
+        token = token.substring(7)
         const decodedToken = jwt.verify(token, env.getJwtSecret());
 
         // Token is valid => storing decodedToken in request to access user ID in controllers
