@@ -103,7 +103,7 @@ const memberController = {
    * @summary allow to the member to update her profile 
    * @param {object} request.decodedToken.user_id user_id 
    * @param {object} request.body.required email, task_notification, week_notification, id
-   * @param {object} request.body pseudo, email, address, zip_code, city, phone; task_notification, week_notification, id
+   * @param {object} request.body pseudo, email, address, zip_code, city, phone, task_notification, week_notification, id
    * @param {object} response Express response object 
    * @returns {object} 200 - success response - application/json
    * @example response - 200 - success reponse example 
