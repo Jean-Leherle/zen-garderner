@@ -66,13 +66,14 @@ const memberController = {
               task_notification,
               week_notification,
             );
-            response.json(insertionUser);
+            return response.json(insertionUser);
+            
         } catch (err) {
                 console.error(err);
-                response.sendStatus(500);
+                return response.sendStatus(500);
             }
         } else {
-          response.status(401).send(error.details[0].message).send(errorDb);
+          return response.status(401).send(error.details[0].message+'\n'+ errorDb );
       };
     }, 
 
@@ -139,7 +140,7 @@ const memberController = {
     // use the schema create with Joi to verificate the updated data
     const {error} = memberSchemaUpdate.validate(request.body);
     if(error){
-      response.send(error.details[0].message);
+      return response.send(error.details[0].message);
     }
     // if the user exist and, the data are validated, the data from the member are updated 
     if(user) {
