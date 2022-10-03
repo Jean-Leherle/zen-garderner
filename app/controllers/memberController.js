@@ -77,12 +77,11 @@ const memberController = {
      /**
    * GET /member/
    * @summary allow to get the profile of member connected
-   * @param {object} request.decodedToken.user_id
+   * @param {object} request.decodedToken.user_id user_id
    * @param {object} response Express response object 
    * @returns {object} 200 - success response - application/json
    * @example response - 200 - success reponse example 
-   *  
-   * {"pseudo": "bob","email": "bob@bob.bob", "adress": null, "zip_code": null, "city": null, "phone": null, "task_notification": true, "week_notification": false
+   *   {"pseudo": "bob","email": "bob@bob.bob", "adress": "5 rue de paris", "zip_code": "26666", "city": "paris", "phone": "06-06-06-06-06", "task_notification": true, "week_notification": true
    *   }
    */
     getProfile: async (request, response) => {
@@ -102,8 +101,9 @@ const memberController = {
 /**
    * PUT /member/
    * @summary allow to the member to update her profile 
-   * @param {object} request.body.required email and password
-   * @param {object} request.decodedToken.user_id
+   * @param {object} request.decodedToken.user_id user_id 
+   * @param {object} request.body.required email, task_notification, week_notification, id
+   * @param {object} request.body pseudo, email, address, zip_code, city, phone; task_notification, week_notification, id
    * @param {object} response Express response object 
    * @returns {object} 200 - success response - application/json
    * @example response - 200 - success reponse example 
