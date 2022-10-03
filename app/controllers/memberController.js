@@ -3,7 +3,22 @@ const passwordHashing = require("../utils/passwordHashing");
 const memberModel = require("../model/memberModel");
 const { memberSchemaRegister, memberSchemaUpdate } = require("../validation/memberSchema.js");
 
-
+ /**
+   * POST /member/
+   * @summary allow to register a new member
+   * @param {object} request.body.required email and password 
+   * @example request - example
+   * {email : bob@bob.bob, password : 1234}
+   * @param {object} response Express response object 
+   * @returns {object} 200 - success response - application/json
+   * @example response - 200 - success reponse example 
+   * [
+   *   {
+   *    "token" : "cryptedtoken link to the user log",
+   * "userData": {"id": "1","pseudo": "bob","email": "bob@bob.bob", "adress": null, "zip_code": null, "city": null, "phone": null, "task_notification": true, "week_notification": false
+   *   }}
+   * ]
+   */
 
 const memberController = {
   register: async (request, response) => {
@@ -61,22 +76,43 @@ const memberController = {
       };
     }, 
 
+     /**
+   * GET /member/
+   * @summary allow to get the profile of member connected
+   * @param {object} request.decodedToken.user_id
+   * @param {object} response Express response object 
+   * @returns {object} 200 - success response - application/json
+   * @example response - 200 - success reponse example 
+   *  
+   * {"pseudo": "bob","email": "bob@bob.bob", "adress": null, "zip_code": null, "city": null, "phone": null, "task_notification": true, "week_notification": false
+   *   }
+   */
     getProfile: async (request, response) => {
-      //
+      // find the user with the token 
       const user_id = request.decodedToken.user_id;
 
       //find the informations of the user connected 
-      
       const user = await memberModel.findById(user_id);
      
-     //if the user exist in th db send a status 200, if isn't the db satus 401
+     //if the user exist in th db send the user data, if isn't the db satus 401
       if(user) {
         response.send(user);
        } else {
         response.sendStatus(401);
        }
     },
-
+/**
+   * POST /member/
+   * @summary allow to the member to update her profile 
+   * @param {object} request.body.required email and password
+   * @param {object} request.decodedToken.user_id
+   * @param {object} response Express response object 
+   * @returns {object} 200 - success response - application/json
+   * @example response - 200 - success reponse example 
+   *  
+   * {"pseudo": "bob","email": "bob@bob.bob", "adress": null, "zip_code": null, "city": null, "phone": null, "task_notification": true, "week_notification": false
+   *   }
+   */
   updateProfile: async (request, response) => {
     const user_id = request.decodedToken.user_id;
     const {

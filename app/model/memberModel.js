@@ -29,9 +29,12 @@ const memberModel = {
       return null;
     };
   },
+  
   findById: async (id) => {
     const query = {
-      text: `SELECT * FROM "user" WHERE "id" = $1;`,
+      text: `SELECT "pseudo", "email", "address", "zip_code", 
+      "city", "phone", "task_notification", "week_notification"
+      FROM "user" WHERE "id" = $1;`,
       values: [id],
     };
     const result = await client.query(query);
