@@ -3,6 +3,8 @@ const passwordHashing = require("../utils/passwordHashing");
 const memberModel = require("../model/memberModel");
 const { memberSchemaRegister, memberSchemaUpdate } = require("../validation/memberSchema.js");
 
+
+
 const memberController = {
   register: async (request, response) => {
     const {
@@ -49,7 +51,7 @@ const memberController = {
               task_notification,
               week_notification,
             );
-            response.status(201).json(insertionUser);
+            response.json(insertionUser);
         } catch (err) {
                 console.error(err);
                 response.sendStatus(500);
@@ -69,7 +71,7 @@ const memberController = {
      
      //if the user exist in th db send a status 200, if isn't the db satus 401
       if(user) {
-        response.status(201).send(user);
+        response.send(user);
        } else {
         response.sendStatus(401);
        }
@@ -110,7 +112,7 @@ const memberController = {
            task_notification,
            week_notification,
            id);
-      response.status(201).send(userUpdate);
+      response.send(userUpdate);
     } else {
       response.status(401);
     };
