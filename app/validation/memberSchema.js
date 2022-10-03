@@ -4,7 +4,7 @@ const Joi = require('joi');
 // variables for the different regex :  email, phone and zip_code
 const regexEmail = '^[a-zA-Z0-9_.]+@([a-zA-Z0-9_-]+.)+[a-zA-Z0-9_-]{2,4}$';
 const regexZipCode= '^[0-9]{5}$';
-const regexPhone= '^^([+]33\\s?|0)\\d((\\s|\\.|\\-|\\_|)?\\d{2}){3}(\\3[0-9]{2})$'
+const regexPhone= '^([+]33\\s?|0)\\d((\\s|\\.|\\-|\\_|)?\\d{2}){3}(\\3[0-9]{2})$'
 
 
 // creating a schema to validate the data's values for the registration of an new user

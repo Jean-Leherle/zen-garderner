@@ -26,7 +26,7 @@ const sessionController = {
     // Checking if user exists by email
     const user = await memberModel.findByEmail(email);
     if (!user) {
-      return response.sendStatus(401);
+      return response.status(401).send('email not found');
     }
 
     // Checking user password
@@ -55,10 +55,10 @@ const sessionController = {
         });
       } else {
         // Password & email are not valid
-        response.sendStatus(401);
+        response.status(401).send('password invalid');
       }
     } catch (error) {
-      console.error(error);
+      console.error('login error',error);
       response.sendStatus(500);
     }
   },
