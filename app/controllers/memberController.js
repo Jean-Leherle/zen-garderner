@@ -100,6 +100,7 @@ const memberController = {
 
     //if the user exist in th db send the user data, if isn't the db satus 401
     if (user) {
+      delete user.password
       response.send(user);
     } else {
       response.sendStatus(400);
