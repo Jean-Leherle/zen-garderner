@@ -4,6 +4,8 @@ const env = require('../config/env.js');
 
 /** Checks authorization token (JWT) from Authorization header */
 const checkAuthorization = async (request, response, next) => {
+    console.log('checkAuthorization', 'session', request.session);
+    console.log('checkAuthorization', 'token', request.session?.token);
     const token = request.session?.token;
 
     // Check token has been sent

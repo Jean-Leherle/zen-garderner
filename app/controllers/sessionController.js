@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const env = require('../config/env.js');
 const passwordHashing = require("../utils/passwordHashing");
-const userModel = require('../model/userModel');
+const memberModel = require('../model/memberModel');
 
 const sessionController = {
   /**
@@ -72,9 +72,9 @@ const sessionController = {
    * @returns  200 - success response
    */
   logout: (request, response) => {
+    request.session.destroy();
     response.sendStatus(200);
   },
-
 }
 
 module.exports = sessionController;
