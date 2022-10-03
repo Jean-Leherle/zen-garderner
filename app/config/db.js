@@ -4,10 +4,10 @@ const env = require('./env');
 
 const client = new Client({
     connectionString: env.getDataBaseUrl(),
-    ssl: {
-        rejectUnauthorized: false,
-    }
-}); 
+        ssl:{
+    rejectUnauthorized: false
+}
+});
 //const client = new Client(env.getDataBaseUrl())
 client.connect();
 
