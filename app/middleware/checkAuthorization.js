@@ -8,7 +8,8 @@ const checkAuthorization = async (request, response, next) => {
     console.log('checkAuthorization', 'token', request.session?.token);
     const token = request.session?.token;
 
-    console.log('Headers', request.headers)
+    console.log('Headers', request.get("Authorization"))
+
 
     // Check token has been sent
     if (!token) {
