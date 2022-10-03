@@ -6,10 +6,10 @@ const env = require('../config/env.js');
 const checkAuthorization = async (request, response, next) => {
     console.log('checkAuthorization', 'session', request.session);
     console.log('checkAuthorization', 'token', request.session?.token);
-    const token = request.session?.token;
+    // const token = request.session?.token;
 
-    const token2 = request.get("Authorization").substring(7)
-    console.log(token2)
+    const token = request.get("Authorization").substring(7)
+    console.log(token)
 
 
     // Check token has been sent
