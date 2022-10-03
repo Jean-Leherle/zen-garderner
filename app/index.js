@@ -8,8 +8,8 @@ const env = require('./config/env');
 const app = express();
 require('./helpers/apiDocs')(app);
 app
-  .use(express.urlencoded({ extended: true })) // permet l'encodage et la lecture du body
-  .use(express.json()) // permet l'utilisation des json dans le body
+  .use(express.urlencoded({ extended: true })) // allows the encoding and reading of the body
+  .use(express.json()) //allows the use of json in the body
   .use(session({
     secret: env.getSessionSecret(),
     resave: false,
@@ -19,7 +19,11 @@ app
         httpOnly: true,
     },
   }))
+
   .use(cors("*")) // Levé de la restriction CORS pour permettre la communication avec le front React.
+
+  //.use(cors(env.getCors())) // removing restrictions to allow communication with the front (react)
+
   .use(routerIndex);
 
 
