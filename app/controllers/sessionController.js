@@ -9,7 +9,7 @@ const sessionController = {
    * POST /session/
    * @summary allow to login
    * @param {object} request.body.required email and password 
-   * @example request - example
+   * @example request - example 
    * {email : bob@bob.bob, password : 1234}
    * @param {object} response Express response object 
    * @returns {object} 200 - success response - application/json

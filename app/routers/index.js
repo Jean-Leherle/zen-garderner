@@ -6,8 +6,9 @@ const ROUTES = require('../config').ROUTES;
 
 const router = express.Router();
 
+router.use(ROUTES.SESSION, sessionRouter);
+router.use(ROUTES.MEMBER, memberRouter);
 router.use(ROUTES.TASKS, tasksRouter);
-router.use(sessionRouter);
-router.use(memberRouter);
+
 
 module.exports = router;
