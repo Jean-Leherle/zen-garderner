@@ -7,7 +7,7 @@ const { memberSchemaRegister, memberSchemaUpdate } = require("../validation/memb
    * POST /member/
    * @summary allow to register a new member
    * @param {object} request.body.required email, password, repeat_password, task_notification, week_notification
-   * @param {object} request.body pseudo, email, password, repeat_password, address, zip_code, city, phone, task_notification, week_notification,
+   * @param {object} request.body Express request object contain task as json - x-www-form-urlencoded, pseudo, email, password, repeat_password, address, zip_code, city, phone, task_notification, week_notification,
    * @example request - example
    * {pseudo: bob, email : bob@bob.bob, password : 1234, repeat_password: 1234, address: 5 rue de paris, zip_code: 26666, city: paris, phone:06-06-06-06-06, task_notification: true, week_notification: true }
    * @param {object} response Express response object 
@@ -79,6 +79,7 @@ const memberController = {
    * @summary allow to get the profile of member connected
    * @param {object} request.decodedToken.user_id user_id
    * @param {object} response Express response object 
+   * @returns {object} 401 - unauthorized - no user found
    * @returns {object} 200 - success response - application/json
    * @example response - 200 - success reponse example 
    *   {"pseudo": "bob","email": "bob@bob.bob", "adress": "5 rue de paris", "zip_code": "26666", "city": "paris", "phone": "06-06-06-06-06", "task_notification": true, "week_notification": true
@@ -99,11 +100,11 @@ const memberController = {
        }
     },
 /**
-   * PUT /member/
+   * PATCH /member/
    * @summary allow to the member to update her profile 
    * @param {object} request.decodedToken.user_id user_id 
    * @param {object} request.body.required email, task_notification, week_notification, id
-   * @param {object} request.body pseudo, email, address, zip_code, city, phone, task_notification, week_notification, id
+   * @param {object} request.body Express request object contain task as json - x-www-form-urlencoded pseudo, email, address, zip_code, city, phone, task_notification, week_notification, id
    * @param {object} response Express response object 
    * @returns {object} 200 - success response - application/json
    * @example response - 200 - success reponse example 
@@ -122,8 +123,9 @@ const memberController = {
       phone,
       task_notification,
       week_notification,
-      id
+      id = user_id
     } = request.body;
+    console.log(request.body);
     
     //find the user connected and get all of her informations 
     const user = await memberModel.findById(user_id);
@@ -133,14 +135,13 @@ const memberController = {
     if(error){
       response.send(error.details[0].message);
     }
-  
     // if the user exist and, the data are validated, the data from the member are updated 
     if(user) {
       const userUpdate = await memberModel.updateUser(
            pseudo,
            email,
            address,
-           zip_code ,
+           zip_code,
            city,
            phone,
            task_notification,

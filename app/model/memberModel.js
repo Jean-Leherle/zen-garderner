@@ -82,6 +82,7 @@ const memberModel = {
       values: [pseudo, email, address, zip_code, city, phone, task_notification, week_notification, id],
     };
     const result = await client.query(updateQuery);
+    console.log(updateQuery);
     const updateUser = result.rows[0];
     return updateUser;
   }

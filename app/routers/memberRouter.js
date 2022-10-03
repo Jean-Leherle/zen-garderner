@@ -9,6 +9,6 @@ const memberRouter = express.Router();
 memberRouter
   .get(ROUTES.MEMBER, checkAuthorization, memberController.getProfile)
   .post(ROUTES.MEMBER, memberController.register)
-  .put(ROUTES.MEMBER, checkAuthorization, memberController.updateProfile)
+  .patch(ROUTES.MEMBER, checkAuthorization, memberController.updateProfile)
 
 module.exports = memberRouter;
