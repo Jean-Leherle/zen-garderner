@@ -24,7 +24,7 @@ const sessionController = {
     const { email, password } = request.body;
 
     // Checking if user exists by email
-    const user = await userModel.findByEmail(email);
+    const user = await memberModel.findByEmail(email);
     if (!user) {
       return response.sendStatus(401);
     }
