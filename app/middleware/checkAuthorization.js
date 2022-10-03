@@ -10,6 +10,7 @@ const checkAuthorization = async (request, response, next) => {
 
     // Check token has been sent
     if (!token) {
+        console.log('token is missing');
         return response.sendStatus(401);
     }
 
@@ -24,7 +25,7 @@ const checkAuthorization = async (request, response, next) => {
     } catch (error) {
         // Token is expired, invalid
         console.log(error);
-        response.sendStatus(401); // HTTP 498 is an nginx reserved code, not standard
+        return response.sendStatus(401); // HTTP 498 is an nginx reserved code, not standard
     }
 };
 
