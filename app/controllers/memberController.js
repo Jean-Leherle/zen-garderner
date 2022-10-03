@@ -73,7 +73,7 @@ const memberController = {
         return response.sendStatus(500);
       }
     } else {
-      return response.status(400).send(error.details[0].message + '\n' + errorDb);
+      return response.status(400).send(error?(error.details[0].message+'\n'):'' + errorDb);
     };
   },
 
