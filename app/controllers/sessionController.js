@@ -52,6 +52,7 @@ const sessionController = {
         // Sending user data as response
         response.json({
           userData: user,
+          jwtToken: jwtToken,
         });
       } else {
         // Password & email are not valid
