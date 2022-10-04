@@ -2,6 +2,7 @@
     "ROUTES": {
         "SESSION": "/session",
         "TASKS": "/tasks",
-        "MEMBER": "/member"
+        "MEMBER": "/member",
+        "SHEETS": "/sheets"
     }
 }

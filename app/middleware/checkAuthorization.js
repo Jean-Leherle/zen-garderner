@@ -9,7 +9,7 @@ const checkAuthorization = async (request, response, next) => {
     // const token = request.session?.token;
 
     let token = request.get("Authorization")
-    console.log(token)
+    //console.log(token)
 
 
     // Check token has been sent
