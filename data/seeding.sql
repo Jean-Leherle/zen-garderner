@@ -33,3 +33,10 @@ COMMIT;
 begin;
 INSERT INTO "user" ("pseudo", "email", "password", "task_notification", "week_notification") VALUES('bob', 'bob@bob.bob','$argon2id$v=19$m=4096,t=3,p=1$Dj+eFNo2t0gXcy3MTByb0A$jJcvF6iWIuvJSlBaA9l0fRIIt3rMPZVrc4OZr/NfH7c', true,false);
 Commit;
+
+BEGIN;
+INSERT INTO "categorie" ("label")
+VALUES('facile');
+INSERT INTO "sheet_has_categorie" ("sheet_id", "categorie_id")VALUES(1,3);
+
+COMMIT;
