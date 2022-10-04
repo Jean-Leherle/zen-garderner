@@ -9,72 +9,82 @@ const { memberSchemaRegister, memberSchemaUpdate } = require("../validation/memb
   * @param {object} request.body.required email, password, repeat_password, task_notification, week_notification
   * @param {object} request.body Express request object contain task as json pseudo, email, password, repeat_password, address, zip_code, city, phone, task_notification, week_notification - x-www-form-urlencoded
   * @example request - example
-  * {pseudo: bob, email : bob@bob.bob, password : 1234, repeat_password: 1234, address: 5 rue de paris, zip_code: 26666, city: paris, phone:06-06-06-06-06, task_notification: true, week_notification: true }
+  * {
+    * pseudo: bob, 
+    * email : bob@bob.bob, 
+    * password : 1234, 
+    * repeat_password: 1234, 
+    * address: 5 rue de paris, 
+    * zip_code: 26666, 
+    * city: paris, 
+    * phone:06-06-06-06-06, 
+    * task_notification: true, 
+    * week_notification: true 
+    * }
   * @param {object} response Express response object 
   * @returns {object} 200 - success response - application/json
   * @example response - 200 - success reponse example 
   *   [
   * {
-  *    "pseudo": "bob","email": "bob@bob.bob", "adress": "5 rue de paris", "zip_code": "26666", "city": "paris", "phone": "06-06-06-06-06", "task_notification": true, "week_notification": true
+  *     "pseudo": "bob",
+  *     "email": "bob@bob.bob", 
+  *     "adress": "5 rue de paris", 
+  *     "zip_code": "26666", 
+  *     "city": "paris", 
+  *     "phone": "06-06-06-06-06", 
+  *     "task_notification": true, 
+  *     "week_notification": true
   *   }
   * ]
   */
 
 const memberController = {
   register: async (request, response) => {
-    const {
-      pseudo,
-      email,
-      password,
-      repeat_password,
-      address,
-      zip_code,
-      city,
-      phone,
-      task_notification,
-      week_notification,
-    } = request.body;
+    let user = request.body
 
-    // use the schema create with Joi to verificate the data send by the new user 
-    const { error } = await memberSchemaRegister.validate(request.body);
+    for(const property in user){
+      user[property] =user[property]?user[property]:null
+    }
 
+    let errorDb = []
+
+    
     // check if pseudo is unique
-    let errorDb = ""
-    const pseudoUnique = await memberModel.findByPseudo(pseudo);
-    if (pseudoUnique) {
-      errorDb += "Pseudo déjà utilisé // "
+    //all actual information about user
+    let pseudoUnique //try to find user with same pseudo
+    let emailUnique // try to find user with same email
+    try {
+      pseudoUnique = await memberModel.findByPseudo(user.pseudo);
+      emailUnique = await memberModel.findByEmail(user.email);
+      
+    } catch (err) {
+      console.log(err);
+      return response.status(500).send(err)
     }
-
-    // Checking if the member is not already registered
-    const resultUser = await memberModel.findByEmail(email);
-    if (resultUser) {
-      errorDb += "Email déjà utilisé";
+    if (pseudoUnique&&pseudoUnique.pseudo!==user.pseudo) {
+      errorDb.push( "Pseudo déjà utilisé")
     }
-
+    if (emailUnique&&emailUnique.email!==user.email) {
+      errorDb.push("Email déjà utilisé");
+    }
+    // use the schema create with Joi to verificate the updated data
+    const { error } = await memberSchemaRegister.validate(user);
+    if(error){
+      errorDb.push(error.details[0].message)
+    }
+    if(errorDb.length>=1){
+      return response.status(400).send(errorDb)
+    }
     //  if the member is not registered, it is inserted in db
-    if (!error && !errorDb) {
-      const hashedPassword = await passwordHashing.hash(password);
+      const hashedPassword = await passwordHashing.hash(user.password);
+      user={...user, password:hashedPassword}
       try {
-        const insertionUser = await memberModel.insertUser(
-          pseudo,
-          email,
-          hashedPassword,
-          address,
-          zip_code,
-          city,
-          phone,
-          task_notification,
-          week_notification,
-        );
+        const insertionUser = await memberModel.insertUser(user);
         return response.status(201).json(insertionUser);
-
       } catch (err) {
         console.error(err);
         return response.sendStatus(500);
       }
-    } else {
-      return response.status(400).send(error?(error.details[0].message+'\n'):'' + errorDb);
-    };
   },
 
   /**
@@ -87,7 +97,14 @@ const memberController = {
 * @example response - 200 - success reponse example 
 *   [
 * {
-*    "pseudo": "bob","email": "bob@bob.bob", "adress": "5 rue de paris", "zip_code": "26666", "city": "paris", "phone": "06-06-06-06-06", "task_notification": true, "week_notification": true
+*    "pseudo": "bob",
+    "email": "bob@bob.bob", 
+    "adress": "5 rue de paris", 
+    "zip_code": "26666", 
+    "city": "paris", 
+    "phone": "06-06-06-06-06", 
+    "task_notification": true, 
+    "week_notification": true
 *   }
 * ]
 */
@@ -101,7 +118,7 @@ const memberController = {
     //if the user exist in th db send the user data, if isn't the db satus 401
     if (user) {
       delete user.password
-      response.send(user);
+      response.satus(200).send(user);
     } else {
       response.sendStatus(400);
     }
@@ -117,58 +134,69 @@ const memberController = {
      * @example response - 200 - success reponse example 
      *   [
      * {
-     *    "pseudo": "bob","email": "bob@bob.bob", "adress": "5 rue de paris", "zip_code": "26666", "city": "paris", "phone": "06-06-06-06-06", "task_notification": true, "week_notification": true
+     *    "pseudo": "bob",
+     *    "email": "bob@bob.bob", 
+     *    "adress": "5 rue de paris", 
+     *    "zip_code": "26666", 
+     *    "city": "paris", 
+     *    "phone": "06-06-06-06-06", 
+     *    "task_notification": true, 
+     *    "week_notification": true
      *   }
      * ]
      */
   updateProfile: async (request, response) => {
     const user_id = request.decodedToken.user_id;
-    const {
-      pseudo,
-      email,
-      address,
-      zip_code,
-      city,
-      phone,
-      task_notification,
-      week_notification,
-      id = user_id
-    } = request.body;
+    if(isNaN(parseInt(user_id))){
+      return response.sendStatus(400);
+    }
+    user = request.body
 
-    //find the user connected and get all of her informations 
-    let user
+    for(const property in user){
+      user[property] =user[property]?user[property]:null
+    }
+    let errorDb = []
+    
+    let userConnected //all actual information about user
+    let pseudoUnique //try to find user with same pseudo
+    let emailUnique // try to find user with same email
     try {
-      user = await memberModel.findById(user_id);
+      userConnected = await memberModel.findById(user_id);
+      pseudoUnique = await memberModel.findByPseudo(user.pseudo);
+      emailUnique = await memberModel.findByEmail(user.email);
       
-    } catch (error) {
-      return response.sendStatus(500)
+    } catch (err) {
+      console.log(err);
+      return response.status(500).send(err)
     }
-
+    if (pseudoUnique&&pseudoUnique.pseudo!==userConnected.pseudo) {
+      errorDb.push( "Pseudo déjà utilisé")
+    }
+    if (emailUnique&&emailUnique.email!==userConnected.email) {
+      errorDb.push("Email déjà utilisé");
+    }
     // use the schema create with Joi to verificate the updated data
-    const { error } = memberSchemaUpdate.validate(request.body);
-    if (error) {
-      return response.status(400).send(error.details[0].message);
+    const { error } = await memberSchemaUpdate.validate(user);
+    if(error){
+      errorDb.push(error.details[0].message)
     }
+    if(errorDb.length>=1){
+      return response.status(400).send(errorDb)
+    }
+    user = {...user,id:user_id}
+   
     // if the user exist and, the data are validated, the data from the member are updated 
     try {
       if (user) {
-        const userUpdate = await memberModel.updateUser(
-          pseudo,
-          email,
-          address,
-          zip_code,
-          city,
-          phone,
-          task_notification,
-          week_notification,
-          id);
-        response.send(userUpdate);
+        const userUpdate = await memberModel.updateUser(user);
+        response.status(200).send(userUpdate);
       } else {
-        response.status(400);
+        response.sendStatus(400);
       };
     }
     catch (error) {
-      response.sendStatus(500)
+      console.log(error);
+      response.status(500).send(error)
     }
   }
 

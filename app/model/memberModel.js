@@ -74,27 +74,27 @@ const memberModel = {
     };
   },
 
-  insertUser: async (pseudo, email, password, address, zip_code, city, phone, task_notification, week_notification) => {
+  insertUser: async (user) => {
     const insertQuery = {
       text: `INSERT INTO "user" ("pseudo", "email", "password", "address", "zip_code", 
       "city", "phone", "task_notification", "week_notification")
       VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "pseudo", "email", "address", "zip_code", 
       "city", "phone", "task_notification", "week_notification";`,
-      values: [pseudo, email, password, address, zip_code, city, phone, task_notification, week_notification],
+      values: [user.pseudo, user.email, user.password, user.address, user.zip_code, user.city, user.phone, user.task_notification, user.week_notification],
     };
     const result = await client.query(insertQuery);
     const insertedUser = result.rows[0];
     return insertedUser;
   },
 
-  updateUser: async(pseudo, email, address, zip_code, city, phone, task_notification, week_notification, id) => {
+  updateUser: async(user) => {
     const updateQuery = {
       text: `UPDATE "user" SET "pseudo"=$1, "email"=$2, "address"=$3, "zip_code"=$4, 
       "city"=$5, "phone"=$6, "task_notification"=$7, "week_notification"=$8
       WHERE "id"= $9 RETURNING "pseudo", "email", "address", "zip_code", 
       "city", "phone", "task_notification", "week_notification"`,
 
-      values: [pseudo, email, address, zip_code, city, phone, task_notification, week_notification, id],
+      values: [user.pseudo, user.email, user.address, user.zip_code, user.city, user.phone, user.task_notification, user.week_notification, user.id],
     };
     const result = await client.query(updateQuery);
     const updateUser = result.rows[0];
