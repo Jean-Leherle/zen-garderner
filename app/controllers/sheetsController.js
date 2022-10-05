@@ -44,13 +44,13 @@ const sheetsController = {
 */  
 getAll: async (request, response) => {
 
-    const { p, n } = request.query;
+    const {q ,p ,n } = request.query;
     let result;
     try {
       if (isNaN(p) || isNaN(n)) { //if this query is not complete (or not a number) we assign default value and suppose number of sheet <100
-        result = await sheetsModel.findAllSheets(0, 100);
+        result = await sheetsModel.findAllSheets(1, 100);
       }
-      result = await sheetsModel.findAllSheets(p, n);
+      result = await sheetsModel.findAllSheets(q||'', p||1, n||100);
       if (!result) {
         return response.status(204).send('no result found');
       }
@@ -94,11 +94,9 @@ getAll: async (request, response) => {
     }
     try {
       let result = await sheetsModel.findOneSheet(sheetsId);
-      const resultAction = await actionModel.findAllAction(sheetsId);
       if(!result) {
         return response.status(204).send("no sheet found");
       }
-      result = { sheet: result, actions : resultAction}
       response.status(200).json(result);
     } catch (error) {
       console.log(error);
