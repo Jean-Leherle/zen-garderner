@@ -77,6 +77,7 @@ const memberController = {
     }
     //  if the member is not registered, it is inserted in db
       const hashedPassword = await passwordHashing.hash(user.password);
+      console.log(hashedPassword)
       user={...user, password:hashedPassword}
       try {
         const insertionUser = await memberModel.insertUser(user);

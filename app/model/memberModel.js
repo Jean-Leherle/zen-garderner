@@ -99,7 +99,35 @@ const memberModel = {
     const result = await client.query(updateQuery);
     const updateUser = result.rows[0];
     return updateUser;
-  }
+  }, 
+
+  findUserTaskNotificationTrue : async() => {
+    const query = {
+      text: `SELECT email.user, pseudo.user, month_begin.task, FROM "user" 
+      JOIN "task" ON task.user_id = user.id 
+      WHERE task_notification = true
+    `
+    }
+    const result = await client.query(query);
+    if (result.rows.length > 0) {
+      return result.rows[0];
+    } else {
+      return null;
+    };
+  }, 
+
+  findUserWeekNotificationTrue : async() => {
+    const query = {
+      text: `SELECT "email" FROM "user" WHERE week_notification = true`
+    }
+    const result = await client.query(query);
+    if (result.rows.length > 0) {
+      return result.rows[0];
+    } else {
+      return null;
+    };
+  }, 
+
 };
 
 module.exports = memberModel;
