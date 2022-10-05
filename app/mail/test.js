@@ -1,8 +1,5 @@
-const env = require("./app/config/env");
-const app = require("./app");
-//const debug = require("debug")("SERVER");
-
 const nodemailer = require("nodemailer");
+const env = require("../config/env");
 
 const sendMail = (to, subject, message) => {
     let mailTransporteur = nodemailer.createTransport({
@@ -14,7 +11,7 @@ const sendMail = (to, subject, message) => {
 });
  let options = {
     from : env.getEmailSender(), 
-    to: "eric.gabrieli@hotmail.fr",
+    to: "clothilde.drouot48@gmail.com",
     subject: "Bienvenue chez Zengardener",
     text:"Bonjour, nous vous souhaitons la bienvenue sur notre application"
  };
@@ -25,10 +22,4 @@ const sendMail = (to, subject, message) => {
  })
 }
 
-sendMail("eric.gabrieli@hotmail.fr", "Bienvenue chez Zengardener",  "Bonjour, nous vous souhaitons la bienvenue sur notre application");
-
-const port = env.getPort();
-app.listen(port, () => {
-  //debug
-  console.log(`Example app listening on port ${port}`);
-});
+sendMail("clothilde.drouot48@gmail.com", "Bienvenue chez Zengardener",  "Bonjour, nous vous souhaitons la bienvenue sur notre application");
