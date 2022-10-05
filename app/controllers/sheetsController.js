@@ -48,7 +48,7 @@ getAll: async (request, response) => {
     let result;
     try {
       if (isNaN(p) || isNaN(n)) { //if this query is not complete (or not a number) we assign default value and suppose number of sheet <100
-        result = await sheetsModel.findAllSheets(0, 100);
+        result = await sheetsModel.findAllSheets(1, 100);
       }
       result = await sheetsModel.findAllSheets(p, n);
       if (!result) {
