@@ -57,6 +57,7 @@ getAll: async (request, response) => {
       response.status(200).json(result);
 
     } catch (error) {
+      console.log(error);
       response.status(500).send(error);
     }
   },
@@ -92,10 +93,12 @@ getAll: async (request, response) => {
       return response.sendStatus(400);
     }
     try {
-      const result = await sheetsModel.findOneSheet(sheetsId);
+      let result = await sheetsModel.findOneSheet(sheetsId);
+      const resultAction = await actionModel.findAllAction(sheetsId);
       if(!result) {
         return response.status(204).send("no sheet found");
       }
+      result = { sheet: result, actions : resultAction}
       response.status(200).json(result);
     } catch (error) {
       console.log(error);
