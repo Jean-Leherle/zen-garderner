@@ -115,22 +115,22 @@ const tasksController = {
     //todo ajouter le controle de la fiche quand la fonction sera prete
 
     if (error.length > 0) {
-      response.status(400).send(error)
-      return
+      return response.status(400).send(error);
+      
     }
     let result
     try {
-      result = await tasksModel.addTasks(userId, tasks)
+      result = await tasksModel.addTasks(userId, tasks);
     } catch (error) {
       console.log(error);
-      response.status(500).send(error)
-      return
+      return response.status(500).send(error);
+      
     }
     if (!result) {
-      response.status(404).send("user not found");
-      return
+      return response.status(404).send("user not found");
+      
     }
-    response.status(201).json(result)
+    response.status(201).json(result);
   },
   /**
    * DELETE /tasks/:tasks_id
@@ -148,15 +148,15 @@ const tasksController = {
     const tasksId = request.params.tasksId;
     let result
     try {
-      result = await tasksModel.deleteTasks(tasksId, userId)
+      result = await tasksModel.deleteTasks(tasksId, userId);
     } catch (error) {
       console.log(error);
-      response.status(500).send(error);
-      return;
+      return response.status(500).send(error);
+      
     }
     if (result === 0) {
-      response.status(400).send('task already removed or not found')
-      return
+      return response.status(400).send('task already removed or not found');
+      
     }
     response.sendStatus(204);
   },
@@ -253,8 +253,8 @@ const tasksController = {
       return
     };
     if (!result) {
-      response.status(404).send("user not found");
-      return
+      return response.status(404).send("user not found");
+      
     };
     response.status(201).json(result)
   },
