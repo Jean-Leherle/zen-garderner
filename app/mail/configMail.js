@@ -3,7 +3,6 @@ const env = require("../config/env");
 
 // réalisation d'un premier test pour l'envoie d email :soucis avec gmail, j'ai vu sur nodemailer, qu'il y'a un truc spécial pour gmail
 // test sur outlook ok mais fini dans les indésirables 
-// regarder comment programmer l'envoie de ces mails : comparer les dates de taches avec NOW 
 const sendMail = (to, subject, message) => {
     // création d'un transporteur : c'est NOTRE MAIL 
     // il a des choses à ajouter 
@@ -15,6 +14,7 @@ const sendMail = (to, subject, message) => {
     }
 });
 // options pour les mails du texte et du sujet 
+// TODO personnalisation des message en fonction du type de notification
  let textWeeekNotification  = {
     from : env.getEmailSender(), 
     to: "clothilde.drouot48@gmail.com",
@@ -31,7 +31,7 @@ const sendMail = (to, subject, message) => {
 }
 
 //appelle de la foinction
-sendMail("clothilde.drouot48@gmail.com", "Bienvenue chez Zengardener",  "Bonjour, nous vous souhaitons la bienvenue sur notre application");
+//sendMail("clothilde.drouot48@gmail.com", "Bienvenue chez Zengardener",  "Bonjour, nous vous souhaitons la bienvenue sur notre application");
 
 
 

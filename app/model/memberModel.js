@@ -73,7 +73,14 @@ const memberModel = {
       return null;
     };
   },
-
+  findAll: async() => {
+    const query = {
+      text: `SELECT * FROM "user"`,
+    };
+    const result = await client.query(query);
+    return result.rows;
+   
+  },
   insertUser: async (user) => {
     const insertQuery = {
       text: `INSERT INTO "user" ("pseudo", "email", "password", "address", "zip_code", 
@@ -103,14 +110,13 @@ const memberModel = {
 
   findUserTaskNotificationTrue : async() => {
     const query = {
-      text: `SELECT email.user, pseudo.user, month_begin.task, FROM "user" 
-      JOIN "task" ON task.user_id = user.id 
-      WHERE task_notification = true
-    `
+      text: `SELECT "pseudo", "email", "task".label, "task".begin_date, "task".limit_date FROM "user" 
+      JOIN "task" ON "task".user_id = "user".id 
+      WHERE task_notification = true; `
     }
     const result = await client.query(query);
     if (result.rows.length > 0) {
-      return result.rows[0];
+      return result.rows;
     } else {
       return null;
     };
@@ -118,7 +124,9 @@ const memberModel = {
 
   findUserWeekNotificationTrue : async() => {
     const query = {
-      text: `SELECT "email" FROM "user" WHERE week_notification = true`
+      text: `SELECT "pseudo", "email", "task".label, "task".begin_date, "task".limit_date FROM "user" 
+      JOIN "task" ON "task".user_id = "user".id 
+      WHERE week_notification = true; `
     }
     const result = await client.query(query);
     if (result.rows.length > 0) {

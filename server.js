@@ -1,7 +1,6 @@
 const env = require("./app/config/env");
 const app = require("./app");
 //const debug = require("debug")("SERVER");
-const nodemailer = require("nodemailer");
 const mail = require('./app/mail/mail');
 
 const port = env.getPort();
