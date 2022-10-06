@@ -11,44 +11,66 @@ const sheetsController = {
    * @returns {object} 200 - success response - application/json
    * @example response - 200 - success response example
    * [
-	  {
+      {
       "id": 1,
       "title": "carotte orange",
-      "photo": "carotte_orange.png",
       "description": "lorem ipsum",
+      "photo": "carotte_orange.png",
       "caracteristique": "lorem ipsum",
-      "categories.id": [
-        "2",
-        "5"
+      "categories": [
+        {
+          "id": 2,
+          "label": "légumes"
+        },
+        {
+          "id": 5,
+          "label": "facile"
+        }
       ],
-		"categories.label": [
-			"légumes",
-			"facile"
-		  ]
-	  },
-	  {
+      "actions": [
+        {
+          "id": 1,
+          "label": "arroser"
+        },
+        {
+          "id": 3,
+          "label": "recolter"
+        }
+      ]
+    },
+    {
       "id": 2,
       "title": "courgette",
-      "photo": "courgette.png",
       "description": "lorem ipsum",
+      "photo": "courgette.png",
       "caracteristique": "lorem ipsum",
-      "categories.id": [
-        "2"
-        ],
-      "categories.label": [
-        "légumes"
-        ]
-	  }
-    ]
+      "categories": [
+        {
+          "id": 2,
+          "label": "légumes"
+        }
+      ],
+      "actions": [
+        {
+          "id": 2,
+          "label": "déserber"
+        }
+      ]
+    }
+  ]
    * @returns {object} 204 - response empty of content - application/json
 */  
 getAll: async (request, response) => {
 
     const {q ,p ,n } = request.query;
+    const regex= /^[\dA-zÀ-ú\s]*$/
     let result;
     try {
       if (isNaN(p) || isNaN(n)) { //if this query is not complete (or not a number) we assign default value and suppose number of sheet <100
         result = await sheetsModel.findAllSheets(1, 100);
+      }
+      if(!regex.test(q)){
+        response.status(400).send("bad query, please dont use special charactere")
       }
       result = await sheetsModel.findAllSheets(q||'', p||1, n||100);
       if (!result) {
@@ -73,14 +95,20 @@ getAll: async (request, response) => {
       {
         "id": 2,
         "title": "courgette",
-        "photo": "courgette.png",
         "description": "lorem ipsum",
+        "photo": "courgette.png",
         "caracteristique": "lorem ipsum",
-        "categories.id": [
-          "2"
+        "categories": [
+          {
+            "id": 2,
+            "label": "légumes"
+          }
         ],
-        "categories.label": [
-          "légumes"
+        "actions": [
+          {
+            "id": 2,
+            "label": "déserber"
+          }
         ]
       }
     ]
@@ -113,18 +141,12 @@ getAll: async (request, response) => {
    * @example response - 200 - success response example
    * [
       {
-        "id": 1,
-        "label": "arroser",
-        "month_begin": 6,
-        "month_limit": 8,
-        "sheet_id": 1
-      },
-      {
-        "id": 3,
-        "label": "recolter",
-        "month_begin": 8,
-        "month_limit": 10,
-        "sheet_id": 1
+        "actions": [
+          {
+            "id": 2,
+            "label": "déserber"
+          }
+        ]
       }
     ]
   *
