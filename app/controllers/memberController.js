@@ -61,10 +61,10 @@ const memberController = {
       console.log(err);
       return response.status(500).send(err)
     }
-    if (pseudoUnique&&pseudoUnique.pseudo!==user.pseudo) {
+    if (pseudoUnique&&pseudoUnique.pseudo === user.pseudo) {
       errorDb.push( "Pseudo déjà utilisé")
     }
-    if (emailUnique&&emailUnique.email!==user.email) {
+    if (emailUnique&&emailUnique.email === user.email) {
       errorDb.push("Email déjà utilisé");
     }
     // use the schema create with Joi to verificate the updated data

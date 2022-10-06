@@ -13,7 +13,7 @@ const mail = {
     //     const user = await memberModel.findAll()     
     // },
     taskMail: async () => {
-        // taskMail :in this function we send two types of mail : one mail the day of th task, another mail 3 days before the day limit of the tasks
+        // taskMail :in this function we send a task mail : the task of the day and the task in 3 days 
         // test of the db 
         const dbOk = await memberModel.findAll();
 
@@ -24,7 +24,7 @@ const mail = {
                 const userTaskNotification = await memberModel.findUserTaskNotificationTrue(); 
                 //console.log(userTaskNotification);
               
-                // parameters of the day date 
+                // Day, month, year of the today's date 
                 const nowDay = new Date().getDate();
                 const nowMonth = new Date().getMonth()+1;
                 const nowYear = new Date().getFullYear();
@@ -38,7 +38,7 @@ const mail = {
                         let table =[];
                         table.push(d.label, d.email);
                         //appeler de la fonction qui envoie le mail il faut lui passer les apramètres 
-                        await scriptMailTask.sendTaskMail(); 
+                        //await scriptMailTask.sendTaskMail(); 
                     }
                 });           
                

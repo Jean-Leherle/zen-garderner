@@ -13,13 +13,12 @@ const sendMailTaskDay = (to, subject, message) => {
         }
     });
 
-// options pour les mails du texte et du sujet 
-// TODO personnalisation des message en fonction du type de notification
+//text of the email
  let textTaskNotification  = {
     from : env.getEmailSender(), 
-    to:
-    subject:
-    text:"Bonjour, voici la notitication de la tache "
+    to: " à personnaliser avec l'email du member",
+    subject: "à personnaliser avec le label de la tache",
+    text:"Bonjour, à personnaliser avec le label de la tache et la fiche qui corresponds "
  };
 
  // envoie du message avec les erreurs
