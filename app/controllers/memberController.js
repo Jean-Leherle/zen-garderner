@@ -42,13 +42,13 @@ const memberController = {
   register: async (request, response) => {
     let user = request.body
 
-    for(const property in user){
-      user[property] =user[property]?user[property]:null
+    for (const property in user) {
+      user[property] = user[property] ? user[property] : null
     }
 
     let errorDb = []
 
-    
+
     // check if pseudo is unique
     //all actual information about user
     let pseudoUnique //try to find user with same pseudo
@@ -56,35 +56,38 @@ const memberController = {
     try {
       pseudoUnique = await memberModel.findByPseudo(user.pseudo);
       emailUnique = await memberModel.findByEmail(user.email);
-      
+
     } catch (err) {
       console.log(err);
       return response.status(500).send(err)
     }
-    if (pseudoUnique&&pseudoUnique.pseudo!==user.pseudo) {
-      errorDb.push( "Pseudo déjà utilisé")
+
+    if (pseudoUnique && pseudoUnique.pseudo === user.pseudo) {
+      errorDb.push("Pseudo déjà utilisé")
     }
-    if (emailUnique&&emailUnique.email!==user.email) {
+
+    if (emailUnique && emailUnique.email === user.email) {
       errorDb.push("Email déjà utilisé");
     }
+    console.log(errorDb);
     // use the schema create with Joi to verificate the updated data
     const { error } = await memberSchemaRegister.validate(user);
-    if(error){
+    if (error) {
       errorDb.push(error.details[0].message)
     }
-    if(errorDb.length>=1){
+    if (errorDb.length >= 1) {
       return response.status(400).send(errorDb)
     }
     //  if the member is not registered, it is inserted in db
-      const hashedPassword = await passwordHashing.hash(user.password);
-      user={...user, password:hashedPassword}
-      try {
-        const insertionUser = await memberModel.insertUser(user);
-        return response.status(201).json(insertionUser);
-      } catch (err) {
-        console.error(err);
-        return response.sendStatus(500);
-      }
+    const hashedPassword = await passwordHashing.hash(user.password);
+    user = { ...user, password: hashedPassword }
+    try {
+      const insertionUser = await memberModel.insertUser(user);
+      return response.status(201).json(insertionUser);
+    } catch (err) {
+      console.error(err);
+      return response.sendStatus(500);
+    }
   },
 
   /**
@@ -147,16 +150,16 @@ const memberController = {
      */
   updateProfile: async (request, response) => {
     const user_id = request.decodedToken.user_id;
-    if(isNaN(parseInt(user_id))){
+    if (isNaN(parseInt(user_id))) {
       return response.sendStatus(400);
     }
     user = request.body
 
-    for(const property in user){
-      user[property] =user[property]?user[property]:null
+    for (const property in user) {
+      user[property] = user[property] ? user[property] : null
     }
     let errorDb = []
-    
+
     let userConnected //all actual information about user
     let pseudoUnique //try to find user with same pseudo
     let emailUnique // try to find user with same email
@@ -164,27 +167,27 @@ const memberController = {
       userConnected = await memberModel.findById(user_id);
       pseudoUnique = await memberModel.findByPseudo(user.pseudo);
       emailUnique = await memberModel.findByEmail(user.email);
-      
+
     } catch (err) {
       console.log(err);
       return response.status(500).send(err)
     }
-    if (pseudoUnique&&pseudoUnique.pseudo!==userConnected.pseudo) {
-      errorDb.push( "Pseudo déjà utilisé")
+    if (pseudoUnique && pseudoUnique.pseudo !== userConnected.pseudo) {
+      errorDb.push("Pseudo déjà utilisé")
     }
-    if (emailUnique&&emailUnique.email!==userConnected.email) {
+    if (emailUnique && emailUnique.email !== userConnected.email) {
       errorDb.push("Email déjà utilisé");
     }
     // use the schema create with Joi to verificate the updated data
     const { error } = await memberSchemaUpdate.validate(user);
-    if(error){
+    if (error) {
       errorDb.push(error.details[0].message)
     }
-    if(errorDb.length>=1){
+    if (errorDb.length >= 1) {
       return response.status(400).send(errorDb)
     }
-    user = {...user,id:user_id}
-   
+    user = { ...user, id: user_id }
+
     // if the user exist and, the data are validated, the data from the member are updated 
     try {
       if (user) {

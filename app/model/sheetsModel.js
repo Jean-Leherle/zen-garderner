@@ -13,32 +13,6 @@ const sheetsModel = {
 
   findAllSheets: async (q, p, n) => {
     const query = {
-      /* text: `SELECT 
-      json_build_object (
-          'id', sheet.id,
-          'title', sheet.title,
-          'photo', sheet.photo,
-          'description', sheet.description,
-          'caracteristique', sheet.caracteristique,
-          'categories', json_build_object(
-            'categorie_id', categorie.id,
-            'label', categorie.label
-          ),
-          'action', json_build_object(
-            'id', action.id,
-            'label', action.label,
-            'month_begin', action.month_begin,
-            'month_limit', action.month_limit
-          )
-        )
-    FROM sheet 
-    INNER JOIN "sheet_has_categorie" ShC ON ShC.sheet_id = sheet.id
-    INNER JOIN "categorie" ON ShC.categorie_id =categorie.id
-    INNER JOIN "action" ON sheet.id = action.sheet_id
-    group by sheet.id
-    ORDER BY sheet.id ASC
-    OFFSET $1 ROWS
-    FETCH FIRST $2 ROWS ONLY;`, */
       text: `
     SELECT sheet.id, 
     sheet.title, 
@@ -57,7 +31,9 @@ const sheetsModel = {
     array(
       SELECT row_to_json(X) 
       from (SELECT action.id id, 
-        action.label label 
+        action.label label,
+        action.month_begin month_begin,
+        action.month_limit month_limit 
         FROM "action"
         WHERE action.sheet_id = sheet.id) 
       as X ) 
@@ -98,7 +74,9 @@ const sheetsModel = {
       array(
         SELECT row_to_json(X) 
         from (SELECT action.id id, 
-          action.label label 
+          action.label label,
+          action.month_begin month_begin,
+          action.month_limit month_limit 
           FROM "action"
           WHERE action.sheet_id = sheet.id) 
         as X ) 
@@ -113,6 +91,61 @@ const sheetsModel = {
     } else {
       return null;
     };
+  },
+  findSheetsByUserFavorite: async (userId) => {
+    const query = {
+      text: `
+      SELECT sheet.id, 
+      sheet.title, 
+      sheet.description,
+      sheet.photo,
+      sheet.caracteristique,
+      array(
+        SELECT row_to_json(_) 
+        from (SELECT categorie.id id, 
+          categorie.label label 
+          FROM "sheet_has_categorie"
+          JOIN "categorie" ON categorie.id = sheet_has_categorie.categorie_id 
+          WHERE sheet_has_categorie.sheet_id = sheet.id) 
+        as _) 
+        as categories,
+      array(
+        SELECT row_to_json(X) 
+        from (SELECT action.id id, 
+          action.label label,
+          action.month_begin month_begin,
+          action.month_limit month_limit
+          FROM "action"
+          WHERE action.sheet_id = sheet.id) 
+        as X ) 
+        as actions
+      FROM sheet
+      JOIN add_favorite ON sheet.id = add_favorite.sheet_id
+        WHERE add_favorite.user_id= $1`,
+      values: [userId]
+    };
+    const result = await client.query(query);
+    if (result.rows.length > 0) {
+      return result.rows;
+    } else {
+      return null;
+    };
+  },
+  addSheetToFavorite: async (userId, sheetsId) => {
+    const query = {
+      text: `INSERT INTO "add_favorite"("user_id","sheet_id")
+      VALUES($1, $2);`,
+      values: [userId, sheetsId]
+    };
+    await client.query(query);
+  },
+  deleteFromFavorite: async (userId, sheetsId) => {
+    const query = {
+      text: `DELETE FROM "add_favorite" 
+      WHERE user_id = $1 AND sheet_id=$2;`,
+      values: [userId, sheetsId]
+    };
+    await client.query(query);
   }
 }
 
