@@ -63,7 +63,7 @@ const sheetsModel = {
       as X ) 
       as actions
     FROM sheet
-      WHERE sheet.title COLLATE Latin1_General_CI_AI Like '%'||$1||'%' COLLATE Latin1_General_CI_A
+      WHERE LOWER(sheet.title) Like LOWER('%'||$1||'%')
       ORDER BY sheet.id ASC
     OFFSET $2 ROWS
     FETCH FIRST $3 ROWS ONLY;`,
