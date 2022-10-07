@@ -14,10 +14,10 @@ const memberSchemaRegister = Joi.object({
     email: Joi.string().regex(new RegExp(regexEmail)).required(),
     password: Joi.string().min(8).required(),
     repeat_password: Joi.ref('password'),
-    address: Joi.string().allow(null),
-    zip_code: Joi.string().pattern(new RegExp(regexZipCode)).allow(null),
-    city: Joi.string().allow(null),
-    phone: Joi.string().pattern(new RegExp(regexPhone)).allow(null),
+    address: Joi.string().allow(null,''),
+    zip_code: Joi.string().pattern(new RegExp(regexZipCode)).allow(null,''),
+    city: Joi.string().allow(null,''),
+    phone: Joi.string().pattern(new RegExp(regexPhone)).allow(null,''),
     task_notification: Joi.boolean().required(),
     week_notification: Joi.boolean().required()
 });
@@ -26,10 +26,10 @@ const memberSchemaRegister = Joi.object({
 const memberSchemaUpdate = Joi.object({
     pseudo: Joi.string().required(),
     email: Joi.string().regex(new RegExp(regexEmail)).required(),
-    address: Joi.string().allow(null),
-    zip_code: Joi.string().pattern(new RegExp(regexZipCode)).allow(null),
-    city: Joi.string().allow(null),
-    phone: Joi.string().pattern(new RegExp(regexPhone)).allow(null),
+    address: Joi.string().allow(null,''),
+    zip_code: Joi.string().pattern(new RegExp(regexZipCode)).allow(null,''),
+    city: Joi.string().allow(null,''),
+    phone: Joi.string().pattern(new RegExp(regexPhone)).allow(null,''),
     task_notification: Joi.boolean().required(),
     week_notification: Joi.boolean().required()
 }); 
