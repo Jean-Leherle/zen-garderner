@@ -5,7 +5,6 @@ const memberController = require('../controllers/memberController');
 const favoriteController = require('../controllers/favoriteController');
 
 const memberRouter = express.Router();
-
 memberRouter
   .get('/', checkAuthorization, memberController.getProfile)
   .post('/', memberController.register)

@@ -54,19 +54,23 @@ const memberController = {
     let pseudoUnique //try to find user with same pseudo
     let emailUnique // try to find user with same email
     try {
-      pseudoUnique = await memberModel.findByPseudo(user.pseudo);
-      emailUnique = await memberModel.findByEmail(user.email);
-
+      if (!user || !user.pseudo || !user.email) {
+        errorDb.push("Body vide ou sans pseudo ou mail")
+      }
+      else {
+        pseudoUnique = await memberModel.findByPseudo(user.pseudo.toLowerCase());
+        emailUnique = await memberModel.findByEmail(user.email.toLowerCase());
+      }
     } catch (err) {
       console.log(err);
       return response.status(500).send(err)
     }
 
-    if (pseudoUnique && pseudoUnique.pseudo === user.pseudo) {
+    if (pseudoUnique && pseudoUnique.pseudo === user.pseudo.toLowerCase()) {
       errorDb.push("Pseudo déjà utilisé")
     }
 
-    if (emailUnique && emailUnique.email === user.email) {
+    if (emailUnique && emailUnique.email === user.email.toLowerCase()) {
       errorDb.push("Email déjà utilisé");
     }
     //console.log(errorDb);
@@ -80,7 +84,7 @@ const memberController = {
     }
     //  if the member is not registered, it is inserted in db
     const hashedPassword = await passwordHashing.hash(user.password);
-    user = { ...user, password: hashedPassword }
+    user = { ...user, pseudo: user.pseudo.toLowerCase(), email: user.email.toLowerCase(), password: hashedPassword }
     try {
       const insertionUser = await memberModel.insertUser(user);
       return response.status(201).json(insertionUser);
@@ -166,17 +170,29 @@ const memberController = {
     let pseudoUnique //try to find user with same pseudo
     let emailUnique // try to find user with same email
     try {
+      if (!user || !user.pseudo || !user.email) {
+        errorDb.push("Body vide ou sans pseudo ou mail")
+      }
+      else {
+        pseudoUnique = await memberModel.findByPseudo(user.pseudo.toLowerCase());
+        emailUnique = await memberModel.findByEmail(user.email.toLowerCase());
+      }
+
       userConnected = await memberModel.findById(user_id);
-      pseudoUnique = await memberModel.findByPseudo(user.pseudo);
-      emailUnique = await memberModel.findByEmail(user.email);
+
+      pseudoUnique = await memberModel.findByPseudo(user.pseudo.toLowerCase());
+      emailUnique = await memberModel.findByEmail(user.email.toLowerCase());
+
     } catch (err) {
       console.log(err);
       return response.status(500).send(err)
     }
-    if (pseudoUnique && pseudoUnique.pseudo !== userConnected.pseudo) {
-      errorDb.push("Pseudo déjà utilisé");
+
+    if (pseudoUnique && pseudoUnique.pseudo === userConnected.pseudo.toLowerCase()) {
+      errorDb.push("Pseudo déjà utilisé")
+
     }
-    if (emailUnique && emailUnique.email !== userConnected.email) {
+    if (emailUnique && emailUnique.email === userConnected.email.toLowerCase()) {
       errorDb.push("Email déjà utilisé");
     }
     // use the schema create with Joi to verificate the updated data
@@ -187,7 +203,7 @@ const memberController = {
     if (errorDb.length >= 1) {
       return response.status(400).send(errorDb)
     }
-    user = { ...user, id: user_id }
+    user = { ...user, pseudo: user.pseudo.toLowerCase(), email: user.email.toLowerCase(), id: user_id }
 
     // if the user exist and, the data are validated, the data from the member are updated 
     try {
