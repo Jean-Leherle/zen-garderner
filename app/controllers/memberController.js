@@ -66,11 +66,11 @@ const memberController = {
       return response.status(500).send(err)
     }
 
-    if (pseudoUnique && pseudoUnique.pseudo === user.pseudo) {
+    if (pseudoUnique && pseudoUnique.pseudo === user.pseudo.toLowerCase()) {
       errorDb.push("Pseudo déjà utilisé")
     }
 
-    if (emailUnique && emailUnique.email === user.email) {
+    if (emailUnique && emailUnique.email === user.email.toLowerCase()) {
       errorDb.push("Email déjà utilisé");
     }
     //console.log(errorDb);
@@ -177,17 +177,17 @@ const memberController = {
       }
 
       userConnected = await memberModel.findById(user_id);
-      pseudoUnique = await memberModel.findByPseudo(user.pseudo);
-      emailUnique = await memberModel.findByEmail(user.email);
+      pseudoUnique = await memberModel.findByPseudo(user.pseudo.toLowerCase());
+      emailUnique = await memberModel.findByEmail(user.email.toLowerCase());
 
     } catch (err) {
       console.log(err);
       return response.status(500).send(err)
     }
-    if (pseudoUnique && pseudoUnique.pseudo === userConnected.pseudo) {
+    if (pseudoUnique && pseudoUnique.pseudo === userConnected.pseudo.toLowerCase()) {
       errorDb.push("Pseudo déjà utilisé")
     }
-    if (emailUnique && emailUnique.email === userConnected.email) {
+    if (emailUnique && emailUnique.email === userConnected.email.toLowerCase()) {
       errorDb.push("Email déjà utilisé");
     }
     // use the schema create with Joi to verificate the updated data
