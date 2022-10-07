@@ -43,7 +43,7 @@ const memberController = {
     let user = request.body
 
     for (const property in user) {
-      user[property] = user[property] ? user[property] : null
+      user[property] = user[property]!=='' ? user[property] : null
     }
 
     let errorDb = []
@@ -160,9 +160,11 @@ const memberController = {
     user = request.body
 
     for (const property in user) {
-      user[property] = user[property] ? user[property] : null
+      user[property] = user[property]!=='' ? user[property] : null
     }
-    let errorDb = []
+    
+    let errorDb = [];
+    //console.log(user, user.task_notification, typeof(user.task_notification));
 
     let userConnected //all actual information about user
     let pseudoUnique //try to find user with same pseudo
@@ -177,6 +179,7 @@ const memberController = {
       }
 
       userConnected = await memberModel.findById(user_id);
+
       pseudoUnique = await memberModel.findByPseudo(user.pseudo.toLowerCase());
       emailUnique = await memberModel.findByEmail(user.email.toLowerCase());
 
@@ -184,8 +187,10 @@ const memberController = {
       console.log(err);
       return response.status(500).send(err)
     }
+
     if (pseudoUnique && pseudoUnique.pseudo === userConnected.pseudo.toLowerCase()) {
       errorDb.push("Pseudo déjà utilisé")
+
     }
     if (emailUnique && emailUnique.email === userConnected.email.toLowerCase()) {
       errorDb.push("Email déjà utilisé");
