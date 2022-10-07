@@ -2,3 +2,4 @@
 %project=zen-gardener
 
 1.create_tables 2022-09-26T09:33:42Z Etudiant O'clock <student@teleporter> # creation des tables
+2.user_correction 2022-09-29T15:37:14Z Etudiant O'clock <student@teleporter> # ajout de contrainte de sur les notifications et l'email et correction sur address
