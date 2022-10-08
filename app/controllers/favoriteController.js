@@ -2,6 +2,36 @@ const sheetsModel = require('../model/sheetsModel')
 const memberModel = require('../model/memberModel')
 
 const favoriteController = {
+  /**
+   *  GET /member/sheet/
+     * @summary allow the member to get all favorite he added 
+     * @param {string} request
+     * @param {object} response Express response object 
+     * @returns {object} 400 - bad request
+     * @returns {object} 204 - no favorite found so return nothing
+     
+     * @returns {object} 200 - success response - application/json
+     * @example response - 200 - success reponse example 
+     *   [
+          {
+            "id": 5,
+            "title": "Patate",
+            "description": "Lorem ipsum ",
+            "photo": "https://www.link-to-photo.com",
+            "caracteristique": "[Semis: pleine terre][Période de semis (pleine terre) : Février, Mars, Avril, Mai, Juin, Juillet]",
+            "categories": [	{
+                "id": 2,
+                "label": "légumes"
+              }],
+            "actions": [{
+                "id": 1,
+                "label": "arroser",
+                "month_begin": 6,
+                "month_limit": 8
+              }]
+          }
+        ]
+   */
   getFavorite: async (request, response) => {
     const userId = request.decodedToken.user_id;
     const user = await memberModel.findById(userId);
@@ -20,7 +50,17 @@ const favoriteController = {
       return response.status(500).send(error);
     }
   },
-
+  /**
+   *  POST /member/sheet/:sheetId
+     * @summary add a new favorite to the user 
+     * @param {string} request.params.sheetId 
+     * @param {object} response Express response object 
+     * @returns {object} 201 - success response - application/json
+     * @returns {object} 204 - no favorite found so return nothing
+     * @returns {object} 400 - bad request
+     * @returns {object} 401 - tokken error : user not found
+     * 
+   */
   addFavorite: async (request, response) => {
     const sheetsId = request.params.sheetsId
     const userId = request.decodedToken.user_id;
@@ -51,7 +91,14 @@ const favoriteController = {
       return response.status(500).send(error);
     }
   },
-
+  /**DELETE /member/sheet/:sheetId
+     * @summary supress this favorite from the favorite liste 
+     * @param {string} request.params.sheetId 
+     * @param {object} response Express response object 
+     * @returns {object} 204 - success response - application/json
+     * @returns {object} 400 - bad request
+     * 
+   */
   deleteFavorite: async (request, response) => {
     const sheetsId = request.params.sheetsId
     const userId = request.decodedToken.user_id;
