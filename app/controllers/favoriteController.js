@@ -24,15 +24,22 @@ const favoriteController = {
   addFavorite: async (request, response) => {
     const sheetsId = request.params.sheetsId
     const userId = request.decodedToken.user_id;
-    const user = await memberModel.findById(userId);
-    if (!user) {
-      return response.sendStatus(400)
-    };
     try {
-      const user = await sheetsModel.findSheetsByUserFavorite(userId);
+      if (!userId) return response.status(401).send('token error : user not found')
+      const user = await memberModel.findById(userId);
+      if (!user) return response.sendStatus(400);
+    } catch (error) {
+      console.log(error);
+      return response.status(500).send(error)
+    }
+
+    if (isNaN(parseInt(sheetsId))) return response.sendStatus(400)
+
+    try {
+      const sheetsList = await sheetsModel.findSheetsByUserFavorite(userId);
       const sheet = await sheetsModel.findOneSheet(sheetsId)
 
-      if (!user || !sheet || user.find(sheets => sheets.id === parseInt(sheetsId))) { //verify if user already exist
+      if (!sheet || (sheetsList && sheetsList.find(sheets => sheets.id === parseInt(sheetsId)))) { //verify if user already exist
 
         return response.sendStatus(204)
       };
@@ -48,9 +55,10 @@ const favoriteController = {
   deleteFavorite: async (request, response) => {
     const sheetsId = request.params.sheetsId
     const userId = request.decodedToken.user_id;
+
     try {
       const favorites = await sheetsModel.findSheetsByUserFavorite(userId)
-      if (!favorites || !favorites.find(favorite => favorite.id === parseInt(sheetsId))) {
+      if (!favorites || isNaN(parseInt(sheetsId)) || !favorites.find(favorite => favorite.id === parseInt(sheetsId))) {
         return response.sendStatus(400)
       }
       await sheetsModel.deleteFromFavorite(userId, sheetsId);

@@ -165,6 +165,22 @@ getAll: async (request, response) => {
     } catch (error) {
       response.status(500).send(error);
     }
+  },
+  getRandom: async (request, response)=>{
+   let  {n} = request.query
+    try {
+      if (isNaN(parseInt(n)))n=3; //fix the default value to 3
+      if(n>6)n=6;
+
+      const result = await sheetsModel.getRandom(n);
+      if (!result){
+        return response.status(204).send("no sheet found")
+      }
+      response.status(200).json(result)
+    } catch (error) {
+      console.log(error);
+      response.status(500).send(error);
+    }
   }
 }
 module.exports = sheetsController
