@@ -11,6 +11,26 @@ const sheetsModel = {
   *@property {string}  photo.required- name of the photo associated to the sheet
   */
 
+  getRandom: async (n) => {
+    const query = {
+      text:`SELECT sheet.id, 
+    sheet.title, 
+    sheet.description,
+    sheet.photo
+    FROM sheet
+    ORDER BY RANDOM()
+    LIMIT $1`,
+    values : [n]
+  };
+  const result = await client.query(query);
+
+    if (result.rows.length > 0) {
+      return result.rows;
+    } else {
+      return null;
+    };
+  },
+
   findAllSheets: async (q, p, n) => {
     const query = {
       text: `
