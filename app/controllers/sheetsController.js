@@ -1,7 +1,8 @@
 const { request, response } = require("express");
 const env = require("../config/env.js");
 const sheetsModel = require("../model/sheetsModel");
-const actionModel = require("../model/actionModel")
+const actionModel = require("../model/actionModel");
+const sheetSchema = require("../validation/sheetSchema")
 
 const sheetsController = {
   /**
@@ -30,11 +31,15 @@ const sheetsController = {
       "actions": [
         {
           "id": 1,
-          "label": "arroser"
+          "label": "arroser",
+          "month_begin": 6,
+          "month_limit": 8
         },
         {
           "id": 3,
-          "label": "recolter"
+          "label": "recolter",
+          "month_begin": 6,
+          "month_limit": 8
         }
       ]
     },
@@ -53,26 +58,28 @@ const sheetsController = {
       "actions": [
         {
           "id": 2,
-          "label": "déserber"
+          "label": "déserber",
+          "month_begin": 6,
+          "month_limit": 8
         }
       ]
     }
   ]
    * @returns {object} 204 - response empty of content - application/json
-*/  
-getAll: async (request, response) => {
+*/
+  getAll: async (request, response) => {
 
-    const {q ,p ,n } = request.query;
-    const regex= /^[\dA-zÀ-ú\s]*$/
+    const { q, p, n } = request.query;
+    const regex = /^[\dA-zÀ-ú\s]*$/
     let result;
     try {
       if (isNaN(p) || isNaN(n)) { //if this query is not complete (or not a number) we assign default value and suppose number of sheet <100
         result = await sheetsModel.findAllSheets(1, 100);
       }
-      if(!regex.test(q)){
+      if (!regex.test(q)) {
         response.status(400).send("bad query, please dont use special charactere")
       }
-      result = await sheetsModel.findAllSheets(q||'', p||1, n||100);
+      result = await sheetsModel.findAllSheets(q || '', p || 1, n || 100);
       if (!result) {
         return response.status(204).send('no result found');
       }
@@ -84,11 +91,157 @@ getAll: async (request, response) => {
     }
   },
 
-   /**
-   * GET /sheets/:sheetsId
-   * @summary get one sheet 
+  /**
+  * GET /sheets/:sheetsId
+  * @summary get one sheet 
+  * @param {object} response Express response object contain task as json - x-www-form-urlencoded
+  * @param {object} request.params Express request params
+  * @returns {object} 200 - success response - application/json
+  * @example response - 200 - success response example
+  * [
+    {
+      "id": 2,
+      "title": "courgette",
+      "description": "lorem ipsum",
+      "photo": "courgette.png",
+      "caracteristique": "lorem ipsum",
+      "categories": [
+        {
+          "id": 2,
+          "label": "légumes"
+        }
+      ],
+      "actions": [
+        {
+          "id": 2,
+          "label": "déserber",
+          "month_begin": 6,
+          "month_limit": 8
+        }
+      ]
+    }
+  ]
+ *
+ */
+  getOneSheet: async (request, response) => {
+    // fin the right sheet with the id param
+    const sheetsId = parseInt(request.params.sheetsId);
+    if (isNaN(sheetsId)) {
+      return response.sendStatus(400);
+    }
+    try {
+      let result = await sheetsModel.findOneSheet(sheetsId);
+      if (!result) {
+        return response.status(204).send("no sheet found");
+      }
+      response.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      response.status(500).send(error);
+    }
+
+  },
+
+  /**
+   * GET /sheets/:sheetsId/action
+   * @summary get all action from one sheet 
+   * @param {object} response Express response object 
+   * @returns {object} 200 - success response - application/json
+   * @example response - 200 - success response example
+   * [
+      {
+        "actions": [
+          {
+            "id": 2,
+            "label": "déserber",
+            "month_begin": 6,
+            "month_limit": 8
+          }
+        ]
+      }
+    ]
+  *
+  */
+  getActionFromSheet: async (request, response) => {
+    const sheetsId = request.params.sheetsId;
+    if (isNaN(sheetsId)) {
+      return response.sendStatus(400)
+    };
+    try {
+      const result = await actionModel.findAllAction(sheetsId);
+      if (!result) {
+        return response.status(204).send("no action associated to this sheet found")
+      }
+      response.status(200).json(result)
+    } catch (error) {
+      response.status(500).send(error);
+    }
+  },
+  /**
+   * GET /sheets/public
+   * @summary get random sheet 
+   * @param {string} request.query.n Query n values to choose number of sheet between 0 and 6
+   * @returns {object} 200 - success response - application/json
+   * @example response - 200 - success response example
+   * [
+      {
+        "id": 2,
+        "title": "courgette",
+        "description": "lorem ipsum",
+        "photo": "courgette.png"       
+      }
+    ]
+  
+   *@returns {} 204 no sheet found
+   *@returns {500} 500 internal error during request to the database
+
+  */
+  getRandom: async (request, response) => {
+    let { n } = request.query
+    try {
+      if (isNaN(parseInt(n))) n = 3; //fix the default value to 3
+      if (n > 6) n = 6;
+      n = Math.abs(n) //au cas ou n soit négatif
+
+      const result = await sheetsModel.getRandom(n);
+      if (!result) {
+        return response.status(204).send("no sheet found")
+      }
+      response.status(200).json(result)
+    } catch (error) {
+      console.log(error);
+      response.status(500).send(error);
+    }
+  },
+
+  /**
+   * POST /sheets/
+   * @summary create a new sheet + category + action 
+   * @param {object} request.body Express request body : contains the new task -  x-www-form-urlencoded
+   * @example response - 201 - success response example
+   * [
+      {
+        "title": "aubergine",
+        "description": "lorem ipsum",
+        "photo": "courgette.png",
+        "caracteristique": "lorem ipsum",
+        "categories": [
+          {
+            "label": "légumes"
+          }
+        ],
+        "actions": [
+          {
+            "label": "déserber",
+            "month_begin": 6,
+            "month_limit": 8
+          }
+        ]
+      }
+    ]
+   *
+   * 
    * @param {object} response Express response object contain task as json - x-www-form-urlencoded
-   * @param {object} request.params Express request params
    * @returns {object} 200 - success response - application/json
    * @example response - 200 - success response example
    * [
@@ -107,80 +260,31 @@ getAll: async (request, response) => {
         "actions": [
           {
             "id": 2,
-            "label": "déserber"
+            "label": "déserber",
+            "month_begin": 6,
+            "month_limit": 8
           }
         ]
       }
     ]
-  *
-  */
-  getOneSheet: async (request, response) => {
-    // fin the right sheet with the id param
-    const sheetsId = parseInt(request.params.sheetsId);
-    if(isNaN(sheetsId)) { 
-      return response.sendStatus(400);
-    }
-    try {
-      let result = await sheetsModel.findOneSheet(sheetsId);
-      if(!result) {
-        return response.status(204).send("no sheet found");
-      }
-      response.status(200).json(result);
-    } catch (error) {
-      console.log(error);
-      response.status(500).send(error);
-    }
-    
-  },
+   *
+   */
+  createNewSheet: async (request, response) => {
+    //récupérer les informations de la fiches
+    sheet = request.body
 
-  /**
-   * GET /sheets/:sheetsId/action
-   * @summary get all action from one sheet 
-   * @param {object} response Express response object 
-   * @returns {object} 200 - success response - application/json
-   * @example response - 200 - success response example
-   * [
-      {
-        "actions": [
-          {
-            "id": 2,
-            "label": "déserber"
-          }
-        ]
-      }
-    ]
-  *
-  */
-  getActionFromSheet: async (request, response) =>{
-    const sheetsId = request.params.sheetsId;
-    if(isNaN(sheetsId)){
-      return response.sendStatus(400)
-    };
-    try {
-      const result = await actionModel.findAllAction(sheetsId);
-      if (!result){
-        return response.status(204).send("no action associated to this sheet found")
-      }
-      response.status(200).json(result)
-    } catch (error) {
-      response.status(500).send(error);
+    const { error } = await sheetSchema.validate(sheet);
+    if (error) {
+      return response.status(400).send(errorDb)
     }
-  },
-  getRandom: async (request, response)=>{
-   let  {n} = request.query
-    try {
-      if (isNaN(parseInt(n)))n=3; //fix the default value to 3
-      if(n>6)n=6;
+    //verifier les informations
+    //model joi
+    //pour chaque categorie n'existant pas : les créer en renvoyant l'id et stocker ces valeurs dans un tableau
+    //réaliser une requete pour la fiche : récuperer l'id
+    //réaliser une requete pour les actions avec l'identifiantde la fiche
+    //réaliser une requete de creation de catégorie
+    //dans sheet_has_categorie ajouter les anciennes et nouvelles catégorie à la fiche
 
-      const result = await sheetsModel.getRandom(n);
-      if (!result){
-        return response.status(204).send("no sheet found")
-      }
-      response.status(200).json(result)
-    } catch (error) {
-      console.log(error);
-      response.status(500).send(error);
-    }
   }
 }
 module.exports = sheetsController
