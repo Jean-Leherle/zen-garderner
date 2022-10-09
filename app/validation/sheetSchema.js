@@ -8,7 +8,7 @@ const month= Joi.number().integer().max(12).positive();
 const actionSchema = Joi.object({
   label: Joi.string(),
   month_begin : month,
-  month_begin : month,
+  month_limit : month,
   
 });
 
@@ -16,7 +16,7 @@ const sheetSchema = Joi.object({
     title: Joi.string().required(),
     photo: Joi.string().required(),
     description: Joi.string().required(),
-    catacteristique: Joi.string().required(),
+    caracteristique: Joi.string().required(),
     categories:Joi.array().items(Joi.object({
       label:Joi.string()
     })).allow(null),

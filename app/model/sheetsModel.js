@@ -8,21 +8,39 @@ const sheetsModel = {
   *@property {string} title.required - label of sheets
   *@property {string} description.required - categorie of the sheet
   *@property {string} caracteristique.required - caracterisitque of the sheet
-  *@property {string}  photo.required- name of the photo associated to the sheet
+  *@property {string} photo.required- name of the photo associated to the sheet
+  *@property {array<categorie>} categories  list of categorie
+  *@property {array<action>} actions list of actions 
   */
+
+  /**
+   * @typedef {object} categorie array of object
+   * @property {integer} id categorie identifier
+   * @property {string} label name of the categorie 
+   */
+
+
+  /**
+   * @typedef {object} action array of object
+   * @property {integer} id action identifier
+   * @property {string} label definition of the action
+   * @property {integer} month_begin number of the month (1-12)
+   * @property {integer} month_limit number of the month (1-12)
+   * 
+   */
 
   getRandom: async (n) => {
     const query = {
-      text:`SELECT sheet.id, 
+      text: `SELECT sheet.id, 
     sheet.title, 
     sheet.description,
     sheet.photo
     FROM sheet
     ORDER BY RANDOM()
     LIMIT $1`,
-    values : [n]
-  };
-  const result = await client.query(query);
+      values: [n]
+    };
+    const result = await client.query(query);
 
     if (result.rows.length > 0) {
       return result.rows;
@@ -94,14 +112,9 @@ const sheetsModel = {
       array(
         SELECT row_to_json(X) 
         from (SELECT action.id id, 
-          action.label label,
-          action.month_begin month_begin,
-          action.month_limit month_limit 
-          FROM "action"
-          WHERE action.sheet_id = sheet.id) 
-        as X ) 
-        as actions
-      FROM sheet
+          action.lab{
+            "label": "légumes"
+          }
         WHERE sheet.id= $1`,
       values: [id]
     }
@@ -112,6 +125,54 @@ const sheetsModel = {
       return null;
     };
   },
+
+  /**
+   * @summary get an array of categorie to create missing one then return the full array of them
+   * @param {array<categorie>} categories List of categorie 
+   * @returns array of categorie
+   */
+  createCategorieByLabel: async (categories) => {
+    const resultList = []
+    for (const categorie of categories){
+    const getQuery = {
+      text: `
+      SELECT * FROM "categorie" 
+      WHERE categorie.label =$1;`,
+      values: [categorie.label]
+    }
+    const getResult = await client.query(getQuery);
+    if (getResult.rows.length > 0) resultList.push(getResult.rows[0]);
+    else{
+      const createQuery = {
+        text : `
+        INSERT INTO "categorie" ("label")
+        VALUES ($1) returning *;`,
+        values:[categorie.label]
+      }
+      const createResult = await client.query(createQuery);
+      resultList.push(createResult.rows[0]);
+    }
+  }//fin du for
+  return resultList
+    
+  },
+
+  createSheet: async (sheet)=>{
+    const query = {
+      text: `INSERT INTO "sheet" 
+      (title, description, photo, caracteristique)
+      VALUES ($1,$2,$3,$4) returning *;`,
+      values: [sheet.title, sheet.description, sheet.photo, sheet.caracteristique]
+    }
+    const result = await client.query(query);
+    return result.rows
+
+  },
+
+
+  // --------------favorite ----------------
+
+
   findSheetsByUserFavorite: async (userId) => {
     const query = {
       text: `

@@ -2,7 +2,7 @@ const { request, response } = require("express");
 const env = require("../config/env.js");
 const sheetsModel = require("../model/sheetsModel");
 const actionModel = require("../model/actionModel");
-const sheetSchema = require("../validation/sheetSchema")
+const {sheetSchema} = require("../validation/sheetSchema")
 
 const sheetsController = {
   /**
@@ -223,7 +223,7 @@ const sheetsController = {
       {
         "title": "aubergine",
         "description": "lorem ipsum",
-        "photo": "courgette.png",
+        "photo": "aubergine.png",
         "caracteristique": "lorem ipsum",
         "categories": [
           {
@@ -247,9 +247,9 @@ const sheetsController = {
    * [
       {
         "id": 2,
-        "title": "courgette",
+        "title": "aubergine",
         "description": "lorem ipsum",
-        "photo": "courgette.png",
+        "photo": "aubergine.png",
         "caracteristique": "lorem ipsum",
         "categories": [
           {
@@ -271,19 +271,32 @@ const sheetsController = {
    */
   createNewSheet: async (request, response) => {
     //récupérer les informations de la fiches
-    sheet = request.body
+    sheet = request.body[0];
+    //console.log(sheet);
 
     const { error } = await sheetSchema.validate(sheet);
     if (error) {
-      return response.status(400).send(errorDb)
+      return response.status(400).send(error.details[0].message)
     }
-    //verifier les informations
-    //model joi
-    //pour chaque categorie n'existant pas : les créer en renvoyant l'id et stocker ces valeurs dans un tableau
-    //réaliser une requete pour la fiche : récuperer l'id
-    //réaliser une requete pour les actions avec l'identifiantde la fiche
+    try {
+      //pour chaque categorie n'existant pas : les créer en renvoyant la categorie 
+      // stocker chaque categorie dans un tableau
+      const categoriesList = await sheetsModel.createCategorieByLabel(sheet.categories);
+      //réaliser une requete pour la fiche : récuperer l'id
+      const newSheet = await sheetsModel.createSheet(sheet)
+      console.log(newSheet);
+
+      //réaliser une requete pour les actions avec l'identifiantde la fiche
+    
+    } catch (error) {
+      console.log(error);
+      return response.status(500).send(error.message)
+    }
+
+    
     //réaliser une requete de creation de catégorie
     //dans sheet_has_categorie ajouter les anciennes et nouvelles catégorie à la fiche
+    response.status(201).json(sheet)
 
   }
 }
