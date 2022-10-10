@@ -133,31 +133,31 @@ const sheetsModel = {
    */
   createCategorieByLabel: async (categories) => {
     const resultList = []
-    for (const categorie of categories){
-    const getQuery = {
-      text: `
+    for (const categorie of categories) {
+      const getQuery = {
+        text: `
       SELECT * FROM "categorie" 
       WHERE categorie.label =$1;`,
-      values: [categorie.label]
-    }
-    const getResult = await client.query(getQuery);
-    if (getResult.rows.length > 0) resultList.push(getResult.rows[0]);
-    else{
-      const createQuery = {
-        text : `
+        values: [categorie.label]
+      }
+      const getResult = await client.query(getQuery);
+      if (getResult.rows.length > 0) resultList.push(getResult.rows[0]);
+      else {
+        const createQuery = {
+          text: `
         INSERT INTO "categorie" ("label")
         VALUES ($1) returning *;`,
-        values:[categorie.label]
+          values: [categorie.label]
+        }
+        const createResult = await client.query(createQuery);
+        resultList.push(createResult.rows[0]);
       }
-      const createResult = await client.query(createQuery);
-      resultList.push(createResult.rows[0]);
-    }
-  }//fin du for
-  return resultList
-    
+    }//fin du for
+    return resultList
+
   },
 
-  createSheet: async (sheet)=>{
+  createSheet: async (sheet) => {
     const query = {
       text: `INSERT INTO "sheet" 
       (title, description, photo, caracteristique)
@@ -165,8 +165,58 @@ const sheetsModel = {
       values: [sheet.title, sheet.description, sheet.photo, sheet.caracteristique]
     }
     const result = await client.query(query);
-    return result.rows
+    return result.rows[0]
 
+  },
+
+  createActions: async (actions, sheetId) => {
+    const actionList = [];
+    const query = {
+      text: `INSERT INTO "action" 
+      (label, month_begin, month_limit, sheet_id)
+      VALUES `,
+      values: [],
+      index: 1
+    }
+
+    for (const action of actions) {
+      query.text += '('
+      for (const param in action) {
+        query.text += `$${query.index},`;
+        query.values.push(action[param]);
+        query.index++;
+      }
+      query.text += `$${query.index}),`;
+      query.values.push(sheetId)
+      query.index++;
+
+    }
+    query.text = query.text.slice(0, -1);
+    query.text += ' returning *;';
+    //console.log(query);
+    const result = await client.query(query)
+    return result.rows
+  },
+  linkCategoriesToSheet: async (categoriesList, sheetId) => {
+    const query = {
+      text: `INSERT INTO "sheet_has_categorie" 
+      (sheet_id,categorie_id)
+      VALUES `,
+      values: [],
+      index: 1
+    }
+    for (const categorie of categoriesList) {
+      query.text += `($${query.index},$${query.index+1}),`;
+      query.values.push(sheetId, categorie.id);
+      query.index+=2;
+    }
+    query.text= query.text.slice(0, -1);
+    query.text += ' returning *;';
+    //console.log(query);
+
+    const result = await client.query(query)
+    //console.log(result);
+    return result.rows
   },
 
 

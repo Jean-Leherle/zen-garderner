@@ -2,7 +2,7 @@ const { request, response } = require("express");
 const env = require("../config/env.js");
 const sheetsModel = require("../model/sheetsModel");
 const actionModel = require("../model/actionModel");
-const {sheetSchema} = require("../validation/sheetSchema")
+const { sheetSchema } = require("../validation/sheetSchema")
 
 const sheetsController = {
   /**
@@ -271,7 +271,7 @@ const sheetsController = {
    */
   createNewSheet: async (request, response) => {
     //récupérer les informations de la fiches
-    sheet = request.body[0];
+    const sheet = request.body[0];
     //console.log(sheet);
 
     const { error } = await sheetSchema.validate(sheet);
@@ -284,19 +284,28 @@ const sheetsController = {
       const categoriesList = await sheetsModel.createCategorieByLabel(sheet.categories);
       //réaliser une requete pour la fiche : récuperer l'id
       const newSheet = await sheetsModel.createSheet(sheet)
-      console.log(newSheet);
+      //console.log('sheet créé :',newSheet);
+
 
       //réaliser une requete pour les actions avec l'identifiantde la fiche
-    
+      let actionList;
+      if (sheet.actions && sheet.actions.length > 0) {
+        actionList = await sheetsModel.createActions(sheet.actions, newSheet.id)
+      }
+      //console.log(actionList);
+
+      //dans sheet_has_categorie ajouter les anciennes et nouvelles catégorie à la fiche
+      const result = await sheetsModel.linkCategoriesToSheet(categoriesList, newSheet.id);
+
+      if (result.length !== categoriesList.length) return response.status(500).send('error : affect categorie to sheet has fail');
+
+      //fin de la procedure on renvoit la fiche créé
+      response.status(201).json({...newSheet, categories: categoriesList, actions: actionList} )
+      
     } catch (error) {
       console.log(error);
       return response.status(500).send(error.message)
     }
-
-    
-    //réaliser une requete de creation de catégorie
-    //dans sheet_has_categorie ajouter les anciennes et nouvelles catégorie à la fiche
-    response.status(201).json(sheet)
 
   }
 }
