@@ -91,7 +91,7 @@ const tasksController = {
   postNewTasks: async (request, response) => {
     const userId = request.decodedToken.user_id;
     console.log(request.body);
-    const tasks = request.body[0]
+    const tasks = request.body
     const error = []
     if (!tasks.label || tasks.label === '') {
       error.push('error : label null or empty')
