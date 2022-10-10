@@ -217,8 +217,8 @@ const sheetsController = {
   /**
    * POST /sheets/
    * @summary create a new sheet + category + action 
-   * @param {object} request.body Express request body : contains the new task -  x-www-form-urlencoded
-   * @example response - 201 - success response example
+   * @param {object} request.body Express request body, contains the new task - x-www-form-urlencoded
+   * @example request - 201 - success response example 
    * [
       {
         "title": "aubergine",
@@ -228,6 +228,9 @@ const sheetsController = {
         "categories": [
           {
             "label": "légumes"
+          },
+          {
+            "label" : "difficile"
           }
         ],
         "actions": [
@@ -242,8 +245,9 @@ const sheetsController = {
    *
    * 
    * @param {object} response Express response object contain task as json - x-www-form-urlencoded
-   * @returns {object} 200 - success response - application/json
-   * @example response - 200 - success response example
+   * @returns {object} 400 - bad request - application/json
+   * @returns {object} 201 - success response - application/json
+   * @example response - 201 - success response example
    * [
       {
         "id": 2,
@@ -255,6 +259,10 @@ const sheetsController = {
           {
             "id": 2,
             "label": "légumes"
+          },
+          {
+            "id" : 6,
+            "label" : "difficile"
           }
         ],
         "actions": [
@@ -306,7 +314,6 @@ const sheetsController = {
       console.log(error);
       return response.status(500).send(error.message)
     }
-
   }
 }
 module.exports = sheetsController
