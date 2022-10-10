@@ -109,12 +109,17 @@ const sheetsModel = {
           WHERE sheet_has_categorie.sheet_id = sheet.id) 
         as _) 
         as categories,
-      array(
-        SELECT row_to_json(X) 
-        from (SELECT action.id id, 
-          action.lab{
-            "label": "légumes"
-          }
+        array(
+          SELECT row_to_json(X) 
+          from (SELECT action.id id, 
+            action.label label,
+            action.month_begin month_begin,
+            action.month_limit month_limit 
+            FROM "action"
+            WHERE action.sheet_id = sheet.id) 
+          as X ) 
+          as actions
+        FROM sheet
         WHERE sheet.id= $1`,
       values: [id]
     }
