@@ -11,5 +11,6 @@ sheetsRouter
   .get('/', checkAuthorization, sheetsController.getAll) // sheets/?q=[q]&p=[p]&n=[n]
   .get('/:sheetsId', checkAuthorization, sheetsController.getOneSheet)
   .get('/:sheetsId/action/', checkAuthorization, sheetsController.getActionFromSheet)
+  .post('/', checkAuthorization, sheetsController.createNewSheet)
 
 module.exports = sheetsRouter;

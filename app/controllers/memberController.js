@@ -188,11 +188,11 @@ const memberController = {
       return response.status(500).send(err)
     }
 
-    if (pseudoUnique && pseudoUnique.pseudo === userConnected.pseudo.toLowerCase()) {
+    if (pseudoUnique && pseudoUnique.pseudo !== userConnected.pseudo.toLowerCase()) {
       errorDb.push("Pseudo déjà utilisé")
 
     }
-    if (emailUnique && emailUnique.email === userConnected.email.toLowerCase()) {
+    if (emailUnique && emailUnique.email !== userConnected.email.toLowerCase()) {
       errorDb.push("Email déjà utilisé");
     }
     // use the schema create with Joi to verificate the updated data
