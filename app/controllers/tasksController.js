@@ -43,7 +43,7 @@ const tasksController = {
       return
     }
     if (!result) {
-      response.sendStatus(204)
+      response.sendStatus(204).send([])
       return
     }
 

@@ -45,7 +45,7 @@ const sheetsModel = {
     if (result.rows.length > 0) {
       return result.rows;
     } else {
-      return null;
+      return [];
     };
   },
 
@@ -60,7 +60,7 @@ const sheetsModel = {
     array(
       SELECT row_to_json(_) 
       from (SELECT categorie.id id, 
-        categorie.label label 
+        categorie.label "label" 
         FROM "sheet_has_categorie"
         JOIN "categorie" ON categorie.id = sheet_has_categorie.categorie_id 
         WHERE sheet_has_categorie.sheet_id = sheet.id) 
@@ -69,7 +69,7 @@ const sheetsModel = {
     array(
       SELECT row_to_json(X) 
       from (SELECT action.id id, 
-        action.label label,
+        action.label "label",
         action.month_begin month_begin,
         action.month_limit month_limit 
         FROM "action"
@@ -89,7 +89,7 @@ const sheetsModel = {
     if (result.rows.length > 0) {
       return result.rows;
     } else {
-      return null;
+      return [];
     };
   },
 
@@ -103,7 +103,7 @@ const sheetsModel = {
       array(
         SELECT row_to_json(_) 
         from (SELECT categorie.id id, 
-          categorie.label label 
+          categorie.label "label" 
           FROM "sheet_has_categorie"
           JOIN "categorie" ON categorie.id = sheet_has_categorie.categorie_id 
           WHERE sheet_has_categorie.sheet_id = sheet.id) 
@@ -112,7 +112,7 @@ const sheetsModel = {
         array(
           SELECT row_to_json(X) 
           from (SELECT action.id id, 
-            action.label label,
+            action.label "label",
             action.month_begin month_begin,
             action.month_limit month_limit 
             FROM "action"
@@ -127,7 +127,7 @@ const sheetsModel = {
     if (result.rows.length > 0) {
       return result.rows;
     } else {
-      return null;
+      return [];
     };
   },
 
@@ -239,7 +239,7 @@ const sheetsModel = {
       array(
         SELECT row_to_json(_) 
         from (SELECT categorie.id id, 
-          categorie.label label 
+          categorie.label "label" 
           FROM "sheet_has_categorie"
           JOIN "categorie" ON categorie.id = sheet_has_categorie.categorie_id 
           WHERE sheet_has_categorie.sheet_id = sheet.id) 
@@ -248,7 +248,7 @@ const sheetsModel = {
       array(
         SELECT row_to_json(X) 
         from (SELECT action.id id, 
-          action.label label,
+          action.label "label",
           action.month_begin month_begin,
           action.month_limit month_limit
           FROM "action"
@@ -264,7 +264,7 @@ const sheetsModel = {
     if (result.rows.length > 0) {
       return result.rows;
     } else {
-      return null;
+      return [];
     };
   },
   addSheetToFavorite: async (userId, sheetsId) => {
