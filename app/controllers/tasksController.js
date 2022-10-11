@@ -1,6 +1,8 @@
 const { request } = require("express");
 const env = require("../config/env.js");
 const tasksModel = require("../model/tasksModel");
+const {taskSchema} = require ("../validation/taskSchema")
+const sheetModel = require("../model/sheetsModel")
 
 const tasksController = {
   /**
@@ -41,7 +43,7 @@ const tasksController = {
       return
     }
     if (!result) {
-      response.sendStatus(204)
+      response.sendStatus(204).send([])
       return
     }
 
@@ -92,32 +94,21 @@ const tasksController = {
     const userId = request.decodedToken.user_id;
     console.log(request.body);
     const tasks = request.body
-    const error = []
-    if (!tasks.label || tasks.label === '') {
-      error.push('error : label null or empty')
+    tasks.begin_date= new Date(tasks.begin_date)
+    tasks.limit_date= new Date(tasks.limit_date)
+
+    const errorList = []
+    const {error} = await taskSchema.validate(tasks)
+    //console.log(error);
+    if (error) errorList.push(error.details[0].message)
+
+    if(!error&&tasks.sheet_id){
+      const sheet = await sheetModel.findOneSheet(tasks.sheet_id);
+      if (!sheet) errorList.push("error : Sheet don't found to this id") 
     }
 
-    if (!tasks.begin_date || isNaN(Date.parse(tasks.begin_date))) {
-      error.push('error : begin_date is null or not readable')
-    };
-    if (Date.parse(tasks.begin_date) < Date.now()) {
-      error.push('error : begin_date already passed')
-    };
-    if (!tasks.limit_date || isNaN(Date.parse(tasks.limit_date))) {
-      error.push('error : limit_date is null or not readable')
-    };
-    if (Date.parse(tasks.limit_date) < Date.now()) {
-      error.push('error : limit_date already passed')
-    };
-    if (Date.parse(tasks.limit_date) < Date.parse(tasks.begin_date)) {
-      error.push("error : time machine still doesn't exist, limit_date is before begin_date")
-    };
-
-    //todo ajouter le controle de la fiche quand la fonction sera prete
-
-    if (error.length > 0) {
-      return response.status(400).send(error);
-      
+    if (errorList.length > 0) {
+      return response.status(400).send(errorList);
     }
     let result
     try {

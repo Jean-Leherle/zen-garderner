@@ -23,7 +23,7 @@ const tasksModel = {
     if (result.rows.length > 0) {
       return result.rows;
     } else {
-      return null;
+      return [];
     };
   },
   addTasks: async (userId, tasks) => {
@@ -36,7 +36,7 @@ const tasksModel = {
     if (result.rows.length > 0) {
       return result.rows;
     } else {
-      return null;
+      return [];
     };
   },
   deleteTasks: async (id, userId) => {
@@ -57,7 +57,7 @@ const tasksModel = {
     if (result.rows.length > 0) {
       return result.rows;
     } else {
-      return null;
+      return [];
     };
   },
   findTasksById: async (tasksId, userId) => {
@@ -65,13 +65,12 @@ const tasksModel = {
       text: `SELECT * FROM "task" WHERE "id" = $1 AND "user_id" = $2 ORDER BY id ASC;`,
       values: [tasksId, userId],
     };
-    console.log(query);
     const result = await client.query(query);
 
     if (result.rows.length > 0) {
       return result.rows;
     } else {
-      return null;
+      return [];
     };
   
   }
