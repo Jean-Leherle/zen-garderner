@@ -55,8 +55,8 @@ VALUES (
     );
 
 INSERT INTO
-    "categorie" ("label")
-VALUES ('fruits'), ('légumes'), ('facile'), ('herbe aromatiques');
+    "categorie" ("label", "color")
+VALUES ('fruits', '#FFFF1E'), ('légumes', '#D79900'), ('facile', '#00F180'), ('herbe aromatiques', '#339900');
 
 INSERT INTO
     "action"(
@@ -65,8 +65,8 @@ INSERT INTO
         "month_limit",
         "sheet_id"
     )
-VALUES ('arroser les carottes', 6, 8, 1), ('désherber les carottes', 5, 6, 2), ('arroser les fraises')
-('cueillir les fraises', 6, 8, 7), ('ramasser les patates', 5, 7, 3), ('ramasser les carottes', 5, 9, 1)
+VALUES ('arroser les carottes', 6, 8, 1), ('désherber les carottes', 5, 6, 2),
+('cueillir les fraises', 6, 8, 7), ('ramasser les patates', 5, 7, 3), ('ramasser les carottes', 5, 9, 1),
 ('cueillir les framboise', 9, 12, 5), ('ramasser les poivrons', 8, 10, 2), ('arroser les tomates', 6, 9, 6),
 ('planter les haricots verts', 6, 7, 4), ('planter les carottes', 6, 8, 1);
 
@@ -92,7 +92,8 @@ VALUES (
         'bob@bob.bob',
         '$argon2id$v=19$m=4096,t=3,p=1$Dj+eFNo2t0gXcy3MTByb0A$jJcvF6iWIuvJSlBaA9l0fRIIt3rMPZVrc4OZr/NfH7c',
         true,
-        false
+        false,
+        1
     );
 
 INSERT INTO
