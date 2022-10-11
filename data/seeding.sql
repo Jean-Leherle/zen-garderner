@@ -118,8 +118,14 @@ VALUES (
         NULL
     );
 
+
+INSERT INTO "categorie" ("label")
+VALUES('facile');
+INSERT INTO "sheet_has_categorie" ("sheet_id", "categorie_id")VALUES(1,3);
+
 INSERT INTO
     "add_favorite"("user_id", "sheet_id")
 VALUES(1, 1), (1, 2);
 
 COMMIT;
+

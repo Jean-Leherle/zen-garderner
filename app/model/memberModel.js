@@ -73,7 +73,14 @@ const memberModel = {
       return null;
     };
   },
-
+  findAll: async() => {
+    const query = {
+      text: `SELECT * FROM "user"`,
+    };
+    const result = await client.query(query);
+    return result.rows;
+   
+  },
   insertUser: async (user) => {
     const insertQuery = {
       text: `INSERT INTO "user" ("pseudo", "email", "password", "address", "zip_code", 
@@ -99,7 +106,58 @@ const memberModel = {
     const result = await client.query(updateQuery);
     const updateUser = result.rows[0];
     return updateUser;
-  }
+  }, 
+
+  findUserTaskNotificationTrue : async() => {
+    const query = {
+      text: `SELECT "user".id, "user".pseudo, "user".email, 
+      array(
+        SELECT row_to_json(X) 
+        from (
+          SELECT task.label "label", 
+          task.begin_date begin_date,
+          task.limit_date limit_date,
+          task.sheet_id sheet_id
+          FROM "task"
+          WHERE "user".id = task.user_id) 
+        as X ) 
+        as tasks
+      FROM "user" 
+      WHERE "user".task_notification = true; `
+    }
+    const result = await client.query(query);
+    if (result.rows.length > 0) {
+      return result.rows;
+    } else {
+      return null;
+    };
+  }, 
+
+  findUserWeekNotificationTrue : async() => {
+    const query = {
+      text: `SELECT "user".id, "user".pseudo, "user".email, 
+      array(
+        SELECT row_to_json(X) 
+        from (
+          SELECT task.label "label", 
+          task.begin_date begin_date,
+          task.limit_date limit_date,
+          task.sheet_id sheet_id
+          FROM "task"
+          WHERE "user".id = task.user_id) 
+        as X ) 
+        as tasks
+      FROM "user" 
+      WHERE "user".week_notification = true;`
+    }
+    const result = await client.query(query);
+    if (result.rows.length > 0) {
+      return result.rows;
+    } else {
+      return null;
+    };
+  }, 
+
 };
 
 module.exports = memberModel;
