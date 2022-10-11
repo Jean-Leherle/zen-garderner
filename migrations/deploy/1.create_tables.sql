@@ -7,6 +7,8 @@ CREATE DOMAIN ZIP AS TEXT CHECK (VALUE~'^[0-9]{5}$');
 CREATE DOMAIN MAIL AS TEXT CHECK (VALUE~'^[\w\-\.]+@([\w-]+\.)+[\w-]{2,4}$');
 CREATE DOMAIN PHONE AS TEXT CHECK (VALUE~'^(\+33\s?|0)\d((\s|\.|\-|\_|)?\d{2}){3}(\3\d{2})$');
 
+CREATE DOMAIN HEXA-COLOR AS TEXT CHECK (VALUE '^#([a-fA-F0-9]{6}([a-fA-F0-9]{2})?|[a-fA-F0-9]{3})$')
+
 
 
 CREATE TABLE "user" (
@@ -41,7 +43,8 @@ CREATE TABLE "task" (
 
 CREATE TABLE "categorie" (
     id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY UNIQUE,
-    label text NOT NULL  
+    label text NOT NULL,
+    color HEXA-COLOR NOT NULL DEFAULT '#339900'
 );
 
 CREATE TABLE "action" (
