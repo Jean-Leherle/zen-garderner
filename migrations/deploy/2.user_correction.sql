@@ -10,6 +10,8 @@ ALTER COLUMN "task_notification" set NOT NULL;
 ALTER TABLE "user"
 ALTER COLUMN "week_notification" set NOT NULL;
 
+ALTER TABLE "user"
+ADD COLUMN "role_id" int REFERENCES role(id);
 COMMIT;
 
 
