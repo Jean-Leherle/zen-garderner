@@ -7,9 +7,9 @@ const schedule = require('node-schedule');
 const port = env.getPort();
 
 app.set(mail);
-const everyDay = schedule.scheduleJob('42 * * * * *', mail.taskMail);
+const everyDay = schedule.scheduleJob('* 9 * * *', mail.taskMail);
 
-const everyWeek = schedule.scheduleJob(' 1 * * * * *', mail.weekMail);
+const everyWeek = schedule.scheduleJob(' * 10 * * 1', mail.weekMail);
 
 app.listen(port, () => {
   //debug
