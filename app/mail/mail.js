@@ -14,7 +14,6 @@ const mail = {
             try {
                 //find users who want receive the task_notification and who have tasks 
                 const userTaskNotification = await memberModel.findUserTaskNotificationTrue(); 
-                console.log("task", userTaskNotification)
 
                 if(!userTaskNotification) {
                     return
@@ -79,7 +78,7 @@ const mail = {
             try {
                 //find users who want receive the task_notification and who have tasks 
                 let userWeekNotification = await memberModel.findUserWeekNotificationTrue();
-                console.log("week", userWeekNotification) 
+
         
                 // Day, month, year of the today's date 
                 const nowDay = new Date().getDate();
@@ -91,7 +90,6 @@ const mail = {
                 //in order to send a day email for task notification
                 // compare the day, the month and the year with now
 
-                console.log(userWeekNotification);
                 const userToSendMail = userWeekNotification.filter(user => {
         
                     user.taskTextList = []
@@ -138,10 +136,4 @@ const mail = {
 
 module.exports = mail; 
 
-/* const job = schedule.scheduleJob('42 * * * *', function(){
-    console.log('The answer to life, the universe, and everything!');
-  }); */
-  
 
-mail.taskMail();
-mail.weekMail();
