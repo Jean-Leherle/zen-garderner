@@ -1,9 +1,3 @@
--- SQLBook: Code
-
--- Active: 1664201511757@@127.0.0.1@5432@zeng
-
--- SQLBook: Code
-
 BEGIN;
 
 INSERT INTO
@@ -61,8 +55,8 @@ VALUES (
     );
 
 INSERT INTO
-    "categorie" ("label")
-VALUES ('fruits'), ('légumes'), ('facile'), ('herbe aromatiques');
+    "categorie" ("label", "color")
+VALUES ('fruits', '#FFFF1E'), ('légumes', '#D79900'), ('facile', '#00F180'), ('herbe aromatiques', '#339900');
 
 INSERT INTO
     "action"(
@@ -71,7 +65,11 @@ INSERT INTO
         "month_limit",
         "sheet_id"
     )
-VALUES ('arroser', 6, 8, 1), ('déserber', 5, 6, 2);
+VALUES ('arroser les carottes', 6, 8, 1), ('désherber les carottes', 5, 6, 2),
+('cueillir les fraises', 6, 8, 7), ('ramasser les patates', 5, 7, 3), ('ramasser les carottes', 5, 9, 1),
+('cueillir les framboise', 9, 12, 5), ('ramasser les poivrons', 8, 10, 2), ('arroser les tomates', 6, 9, 6),
+('planter les haricots verts', 6, 7, 4), ('planter les carottes', 6, 8, 1);
+
 
 INSERT INTO "role" ("label")
 VALUES ('administrateur'), ('utilisateur');
@@ -86,14 +84,16 @@ INSERT INTO
         "email",
         "password",
         "task_notification",
-        "week_notification"
+        "week_notification", 
+        "role_id"
     )
 VALUES (
         'bob',
         'bob@bob.bob',
         '$argon2id$v=19$m=4096,t=3,p=1$Dj+eFNo2t0gXcy3MTByb0A$jJcvF6iWIuvJSlBaA9l0fRIIt3rMPZVrc4OZr/NfH7c',
         true,
-        false
+        false,
+        1
     );
 
 INSERT INTO
@@ -116,16 +116,17 @@ VALUES (
         '10/11/2022',
         1,
         NULL
+    ),
+    (
+    'cueillette des fraises', 
+    '04/06/2022',
+    '10/08/2022',
+    1,
+    7
     );
-
-
-INSERT INTO "categorie" ("label")
-VALUES('facile');
-INSERT INTO "sheet_has_categorie" ("sheet_id", "categorie_id")VALUES(1,3);
 
 INSERT INTO
     "add_favorite"("user_id", "sheet_id")
-VALUES(1, 1), (1, 2);
+VALUES(1, 1), (1, 2), (1, 7), (1, 8), (1, 9);
 
 COMMIT;
-

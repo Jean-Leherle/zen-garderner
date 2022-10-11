@@ -1,8 +1,9 @@
 const env = require("./app/config/env");
 const app = require("./app");
-//const debug = require("debug")("SERVER");
+
 const mail = require('./app/mail/mail');
 const schedule = require('node-schedule');
+
 
 const port = env.getPort();
 

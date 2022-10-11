@@ -41,7 +41,8 @@ CREATE TABLE "task" (
 
 CREATE TABLE "categorie" (
     id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY UNIQUE,
-    label text NOT NULL  
+    label text NOT NULL, 
+    color text NOT NULL DEFAULT '#339900' 
 );
 
 CREATE TABLE "action" (
