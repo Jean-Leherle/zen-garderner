@@ -20,7 +20,7 @@ const actionModel = {
     if (result.rows.length > 0) {
       return result.rows;
     } else {
-      return null;
+      return [];
     };
   }
 };
