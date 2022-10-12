@@ -71,6 +71,7 @@ const memberController = {
     }
 
     if (emailUnique && emailUnique.email === user.email.toLowerCase()) {
+
       errorDb.push("Email déjà utilisé");
     }
     //console.log(errorDb);
@@ -83,6 +84,7 @@ const memberController = {
       return response.status(400).send(errorDb)
     }
     //  if the member is not registered, it is inserted in db
+
     const hashedPassword = await passwordHashing.hash(user.password);
     user = { ...user, pseudo: user.pseudo, email: user.email.toLowerCase(), password: hashedPassword }
     try {
