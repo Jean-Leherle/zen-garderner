@@ -1,3 +1,4 @@
+-- Active: 1664630442822@@127.0.0.1@5432@zeng
 -- SQLBook: Code
 -- Deploy zen-gardener:1.create_tables to pg
 
@@ -6,8 +7,7 @@ BEGIN;
 CREATE DOMAIN ZIP AS TEXT CHECK (VALUE~'^[0-9]{5}$');
 CREATE DOMAIN MAIL AS TEXT CHECK (VALUE~'^[\w\-\.]+@([\w-]+\.)+[\w-]{2,4}$');
 CREATE DOMAIN PHONE AS TEXT CHECK (VALUE~'^(\+33\s?|0)\d((\s|\.|\-|\_|)?\d{2}){3}(\3\d{2})$');
-
-CREATE DOMAIN HEXA-COLOR AS TEXT CHECK (VALUE '^#([a-fA-F0-9]{6}([a-fA-F0-9]{2})?|[a-fA-F0-9]{3})$')
+CREATE DOMAIN HEXACOLOR AS TEXT CHECK (VALUE~'^#([a-fA-F0-9]{6}([a-fA-F0-9]{2})?|[a-fA-F0-9]{3})$');
 
 
 
@@ -44,7 +44,7 @@ CREATE TABLE "task" (
 CREATE TABLE "categorie" (
     id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY UNIQUE,
     label text NOT NULL,
-    color HEXA-COLOR NOT NULL DEFAULT '#339900'
+    color HEXACOLOR NOT NULL DEFAULT '#339900'
 );
 
 CREATE TABLE "action" (
@@ -57,7 +57,7 @@ CREATE TABLE "action" (
 
 CREATE TABLE "add_favorite" (
     user_id int REFERENCES "user"(id) ON DELETE CASCADE,
-    sheet_id int REFERENCES sheet(id)
+    sheet_id int REFERENCES sheet(id) ON DELETE CASCADE
 );
 
 CREATE TABLE "role" (
@@ -66,8 +66,8 @@ CREATE TABLE "role" (
 );
 
 CREATE TABLE "sheet_has_categorie" (
-    sheet_id int REFERENCES sheet(id),
-    categorie_id int REFERENCES categorie(id)
+    sheet_id int REFERENCES sheet(id) ON DELETE CASCADE,
+    categorie_id int REFERENCES categorie(id) ON DELETE CASCADE
 );
 
 COMMIT;
