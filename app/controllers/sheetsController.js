@@ -81,7 +81,7 @@ const sheetsController = {
       }
       result = await sheetsModel.findAllSheets(q || '', p || 1, n || 100);
       if (!result) {
-        return response.status(204).send('no result found');
+        return response.status(204).send([]);
       }
       response.status(200).json(result);
 
@@ -132,7 +132,7 @@ const sheetsController = {
     try {
       let result = await sheetsModel.findOneSheet(sheetsId);
       if (!result) {
-        return response.status(204).send("no sheet found");
+        return response.status(204).send([]);
       }
       response.status(200).json(result);
     } catch (error) {
@@ -170,7 +170,7 @@ const sheetsController = {
     try {
       const result = await actionModel.findAllAction(sheetsId);
       if (!result) {
-        return response.status(204).send("no action associated to this sheet found")
+        return response.status(204).send([])
       }
       response.status(200).json(result)
     } catch (error) {
@@ -205,9 +205,9 @@ const sheetsController = {
 
       const result = await sheetsModel.getRandom(n);
       if (!result) {
-        return response.status(204).send("no sheet found")
+        return response.status(204).send([]);
       }
-      response.status(200).json(result)
+      response.status(200).json(result);
     } catch (error) {
       console.log(error);
       response.status(500).send(error);

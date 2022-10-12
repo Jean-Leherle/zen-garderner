@@ -46,7 +46,7 @@ const sheetsModel = {
     if (result.rows.length > 0) {
       return result.rows;
     } else {
-      return null;
+      return [];
     };
   },
 
@@ -71,7 +71,7 @@ const sheetsModel = {
     array(
       SELECT row_to_json(X) 
       from (SELECT action.id id, 
-        action.label label,
+        action.label "label",
         action.month_begin month_begin,
         action.month_limit month_limit 
         FROM "action"
@@ -91,7 +91,7 @@ const sheetsModel = {
     if (result.rows.length > 0) {
       return result.rows;
     } else {
-      return null;
+      return [];
     };
   },
 
@@ -115,7 +115,7 @@ const sheetsModel = {
         array(
           SELECT row_to_json(X) 
           from (SELECT action.id id, 
-            action.label label,
+            action.label "label",
             action.month_begin month_begin,
             action.month_limit month_limit 
             FROM "action"
@@ -130,7 +130,7 @@ const sheetsModel = {
     if (result.rows.length > 0) {
       return result.rows;
     } else {
-      return null;
+      return [];
     };
   },
 
@@ -252,7 +252,7 @@ const sheetsModel = {
       array(
         SELECT row_to_json(X) 
         from (SELECT action.id id, 
-          action.label label,
+          action.label "label",
           action.month_begin month_begin,
           action.month_limit month_limit
           FROM "action"
@@ -268,7 +268,7 @@ const sheetsModel = {
     if (result.rows.length > 0) {
       return result.rows;
     } else {
-      return null;
+      return [];
     };
   },
   addSheetToFavorite: async (userId, sheetsId) => {
