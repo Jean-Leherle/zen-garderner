@@ -16,7 +16,8 @@ const sheetsModel = {
   /**
    * @typedef {object} categorie array of object
    * @property {integer} id categorie identifier
-   * @property {string} label name of the categorie 
+   * @property {string} label name of the categorie
+   * @property {string} color hexa of the color (^#([a-fA-F0-9]{6}([a-fA-F0-9]{2})?|[a-fA-F0-9]{3})$) 
    */
 
 
@@ -60,7 +61,8 @@ const sheetsModel = {
     array(
       SELECT row_to_json(_) 
       from (SELECT categorie.id id, 
-        categorie.label "label" 
+        categorie.label label,
+        categorie.color color 
         FROM "sheet_has_categorie"
         JOIN "categorie" ON categorie.id = sheet_has_categorie.categorie_id 
         WHERE sheet_has_categorie.sheet_id = sheet.id) 
@@ -103,7 +105,8 @@ const sheetsModel = {
       array(
         SELECT row_to_json(_) 
         from (SELECT categorie.id id, 
-          categorie.label "label" 
+          categorie.label label,
+          categorie.color color 
           FROM "sheet_has_categorie"
           JOIN "categorie" ON categorie.id = sheet_has_categorie.categorie_id 
           WHERE sheet_has_categorie.sheet_id = sheet.id) 
@@ -148,8 +151,8 @@ const sheetsModel = {
       const getResult = await client.query(getQuery);
       if (getResult.rows.length > 0) resultList.push(getResult.rows[0]);
       else {
-        const createQuery = {
-          text: `
+        const createQuery = { //todo ajouter la couleur que ce sera possible
+          text: ` 
         INSERT INTO "categorie" ("label")
         VALUES ($1) returning *;`,
           values: [categorie.label]
@@ -239,7 +242,8 @@ const sheetsModel = {
       array(
         SELECT row_to_json(_) 
         from (SELECT categorie.id id, 
-          categorie.label "label" 
+          categorie.label label,
+          categorie.color color 
           FROM "sheet_has_categorie"
           JOIN "categorie" ON categorie.id = sheet_has_categorie.categorie_id 
           WHERE sheet_has_categorie.sheet_id = sheet.id) 
