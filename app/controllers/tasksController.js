@@ -92,8 +92,9 @@ const tasksController = {
     */
   postNewTasks: async (request, response) => {
     const userId = request.decodedToken.user_id;
-    console.log(request.body);
-    const tasks = request.body
+
+    const tasks = request.body //todo si bug : mettre [0]
+
     tasks.begin_date= new Date(tasks.begin_date)
     tasks.limit_date= new Date(tasks.limit_date)
 
@@ -105,6 +106,8 @@ const tasksController = {
     if(!error&&tasks.sheet_id){
       const sheet = await sheetModel.findOneSheet(tasks.sheet_id);
       if (!sheet) errorList.push("error : Sheet don't found to this id") 
+
+  
     }
 
     if (errorList.length > 0) {
