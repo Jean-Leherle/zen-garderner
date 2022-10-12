@@ -93,7 +93,8 @@ const tasksController = {
   postNewTasks: async (request, response) => {
     const userId = request.decodedToken.user_id;
 
-    const tasks = request.body //todo si bub mettre [0]
+    const tasks = request.body //todo si bug : mettre [0]
+
     tasks.begin_date= new Date(tasks.begin_date)
     tasks.limit_date= new Date(tasks.limit_date)
 
