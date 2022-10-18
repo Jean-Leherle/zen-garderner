@@ -54,7 +54,7 @@ const tasksController = {
   /**
      * POST /tasks/
      * @summary create new task to the user connected
-     * @param {object} request Express request object contain task as json
+     * @param {object} request Express request object contain task as json - x-www-form-urlencoded
      * @param {object} response Express response object contain task as json
      * @example request - example
      * [
