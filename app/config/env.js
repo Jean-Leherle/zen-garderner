@@ -21,6 +21,18 @@ const env = {
   },
   getDocumentationRoute: ()=>{
     return process.env.API_DOCUMENTATION_ROUTE ?? '/docs';
+  }, 
+  getEmailService: () => {
+    return process.env.EMAIL_SERVICE;
+  },
+  getEmailAdress: () => {
+    return process.env.EMAIL_USERNAME;
+  }, 
+  getEmailPassword: () => {
+    return process.env.EMAIL_PASSWORD;
+  }, 
+  getEmailSender: () => {
+    return process.env.EMAIL_SENDER;
   }
 }
 
