@@ -1,0 +1,28 @@
+_id: req_547a1cd8b1304db8a8c298e865eb7103
+type: Request
+parentId: wrk_933cf9c35fc44dcdb5dc6da6b735e58b
+modified: 1665665390981
+created: 1665665390981
+url: http://localhost:3000/sheets/1/action
+name: get action from one sheet
+description: ""
+method: GET
+body:
+  mimeType: ""
+  text: ""
+parameters: []
+headers:
+  - name: Authorization
+    value: Bearer
+      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMyIsImlhdCI6MTY2NDg4OTA2N30.LKm3-w0k2XrbNApVzzYRGPP67ZkAYgzPeJLUzYZE0pU
+  - name: Cookie
+    value: connect.sid=s%3AeYN1_XCn1Dfd6ZjXefbRnTDesXNTXmB3.F5RzyZMM5BUFs0%2F8XxN1exphhOthR6P1z2FecbXJMhs
+authentication: {}
+metaSortKey: -1665665390981
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

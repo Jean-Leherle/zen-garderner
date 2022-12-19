@@ -1,0 +1,28 @@
+_id: req_cab100745a6b4cab9c12050250d378ab
+type: Request
+parentId: wrk_933cf9c35fc44dcdb5dc6da6b735e58b
+modified: 1665665390966
+created: 1665665390966
+url: http://localhost:3000/tasks/5
+name: delete a tasks
+description: ""
+method: DELETE
+body:
+  mimeType: ""
+  text: ""
+parameters: []
+headers:
+  - name: Authorization
+    value: Bearer
+      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMSIsImlhdCI6MTY2NTU3NjM1Mn0.O2q3gDPmmEnA_zFc2EzbUaELHlKk3KtfU1bugGISBD0
+  - name: Cookie
+    value: connect.sid=s%3AeYN1_XCn1Dfd6ZjXefbRnTDesXNTXmB3.F5RzyZMM5BUFs0%2F8XxN1exphhOthR6P1z2FecbXJMhs
+authentication: {}
+metaSortKey: -1665665390966
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

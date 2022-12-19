@@ -1,0 +1,47 @@
+_id: req_25f8cf0cd84340aa8d5e0c4ada51c06c
+type: Request
+parentId: wrk_933cf9c35fc44dcdb5dc6da6b735e58b
+modified: 1665665390980
+created: 1665665390980
+url: https://zen-gardener-api.herokuapp.com/member
+name: D register new user
+description: ""
+method: POST
+body:
+  mimeType: application/x-www-form-urlencoded
+  params:
+    - name: pseudo
+      value: paté
+    - name: email
+      value: PAT@pat.pat
+    - name: address
+      value: rue du deploy
+    - name: zip_code
+      value: "12345"
+    - name: city
+      value: pommé-sur-loire
+    - name: phone
+      value: "0544054412"
+    - name: task_notification
+      value: "false"
+    - name: week_notification
+      value: "true"
+    - name: password
+      value: azertyui
+    - name: repeat_password
+      value: azertyui
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/x-www-form-urlencoded
+  - name: Cookie
+    value: connect.sid=s%3AFjMpriKMU0oQuprBY-7dF3BUJvVNpDvO.JCwsy2jcjNbNZygRteVzNP0%2BnnGLVoWcNMez5f054b8
+authentication: {}
+metaSortKey: -1665665390980
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

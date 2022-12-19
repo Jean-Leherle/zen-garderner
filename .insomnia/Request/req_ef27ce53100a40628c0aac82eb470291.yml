@@ -1,0 +1,47 @@
+_id: req_ef27ce53100a40628c0aac82eb470291
+type: Request
+parentId: wrk_933cf9c35fc44dcdb5dc6da6b735e58b
+modified: 1665665390979
+created: 1665665390979
+url: http://localhost:3000/member
+name: register new user
+description: ""
+method: POST
+body:
+  mimeType: application/x-www-form-urlencoded
+  params:
+    - name: pseudo
+      value: nic
+    - name: email
+      value: nic@nic.fr
+    - name: password
+      value: azertyui
+    - name: repeat_password
+      value: azertyui
+    - name: address
+      value: ""
+    - name: zip_code
+      value: ""
+    - name: city
+      value: ""
+    - name: phone
+      value: "0544054412"
+    - name: task_notification
+      value: "false"
+    - name: week_notification
+      value: "true"
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/x-www-form-urlencoded
+  - name: Cookie
+    value: connect.sid=s%3AeYN1_XCn1Dfd6ZjXefbRnTDesXNTXmB3.F5RzyZMM5BUFs0%2F8XxN1exphhOthR6P1z2FecbXJMhs
+authentication: {}
+metaSortKey: -1665665390979
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

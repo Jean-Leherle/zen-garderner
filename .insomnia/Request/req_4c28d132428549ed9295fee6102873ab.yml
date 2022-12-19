@@ -1,0 +1,28 @@
+_id: req_4c28d132428549ed9295fee6102873ab
+type: Request
+parentId: wrk_933cf9c35fc44dcdb5dc6da6b735e58b
+modified: 1665665390994
+created: 1665665390994
+url: http://localhost:3000/member/sheet
+name: consulter ses favories
+description: ""
+method: GET
+body:
+  mimeType: ""
+  text: ""
+parameters: []
+headers:
+  - name: Authorization
+    value: bearer
+      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMSIsImlhdCI6MTY2NTA2NzY1Mn0.dWjNwCbMsyQUk18nzw0ooxfiURT4nevF3X7FrLtBgKk
+  - name: Cookie
+    value: connect.sid=s%3AeYN1_XCn1Dfd6ZjXefbRnTDesXNTXmB3.F5RzyZMM5BUFs0%2F8XxN1exphhOthR6P1z2FecbXJMhs
+authentication: {}
+metaSortKey: -1665665390994
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

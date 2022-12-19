@@ -1,0 +1,28 @@
+_id: req_1abe89be71924a3f8b4c25f137c05f93
+type: Request
+parentId: wrk_933cf9c35fc44dcdb5dc6da6b735e58b
+modified: 1665665390993
+created: 1665665390993
+url: https://zen-gardener-api.herokuapp.com/member/sheet/4
+name: D ajouter un favori
+description: ""
+method: POST
+body:
+  mimeType: ""
+  text: ""
+parameters: []
+headers:
+  - name: Authorization
+    value: bearer
+      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMSIsImlhdCI6MTY2NTEzMDUzM30.vAjG-9NzPHcdNx7wo8Je47-kUEz53tkWVE4xzrcZETc
+  - name: Cookie
+    value: connect.sid=s%3AFjMpriKMU0oQuprBY-7dF3BUJvVNpDvO.JCwsy2jcjNbNZygRteVzNP0%2BnnGLVoWcNMez5f054b8
+authentication: {}
+metaSortKey: -1665665390993
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

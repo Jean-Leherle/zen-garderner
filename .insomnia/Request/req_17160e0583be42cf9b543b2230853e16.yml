@@ -1,0 +1,30 @@
+_id: req_17160e0583be42cf9b543b2230853e16
+type: Request
+parentId: wrk_933cf9c35fc44dcdb5dc6da6b735e58b
+modified: 1665665390950
+created: 1665665390950
+url: http://localhost:3000/session
+name: logout
+description: ""
+method: DELETE
+body:
+  mimeType: application/x-www-form-urlencoded
+  text: ""
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/x-www-form-urlencoded
+  - name: Authorization
+    value: Bearer
+      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMyIsImlhdCI6MTY2NDg2MjkwOH0.K4AJo7dKvSwV0ju9OggsyfgidKsHpnpEvvysJQ9ymvE
+  - name: Cookie
+    value: connect.sid=s%3AeYN1_XCn1Dfd6ZjXefbRnTDesXNTXmB3.F5RzyZMM5BUFs0%2F8XxN1exphhOthR6P1z2FecbXJMhs
+authentication: {}
+metaSortKey: -1665665390950
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

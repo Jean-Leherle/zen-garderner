@@ -1,0 +1,28 @@
+_id: req_8e1e081ca2ef4788b40cf2dbc2bedad4
+type: Request
+parentId: wrk_933cf9c35fc44dcdb5dc6da6b735e58b
+modified: 1665665390992
+created: 1665665390992
+url: http://localhost:3000/member/sheet/1
+name: ajouter un favori
+description: ""
+method: POST
+body:
+  mimeType: ""
+  text: ""
+parameters: []
+headers:
+  - name: Authorization
+    value: bearer
+      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMSIsImlhdCI6MTY2NTA1MTMzNn0.ykuHfz_W03fbSFoO9VrcqtduT_juJZQ0hKrkKYoDkPg
+  - name: Cookie
+    value: connect.sid=s%3AeYN1_XCn1Dfd6ZjXefbRnTDesXNTXmB3.F5RzyZMM5BUFs0%2F8XxN1exphhOthR6P1z2FecbXJMhs
+authentication: {}
+metaSortKey: -1665665390992
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

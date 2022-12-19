@@ -1,0 +1,37 @@
+_id: req_254f337582d94539a1273ec2f841a055
+type: Request
+parentId: wrk_933cf9c35fc44dcdb5dc6da6b735e58b
+modified: 1665665390971
+created: 1665665390971
+url: http://localhost:3000/tasks
+name: add tasks
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |
+    
+    	{
+    		"label": "recolte des carrottes",
+    		"begin_date": "2022-10-15T22:00:00.000Z",
+    		"limit_date": "2022-10-14T22:00:00.000Z",
+    		"sheet_id": 1
+    	}
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+  - name: Authorization
+    value: Bearer
+      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMSIsImlhdCI6MTY2NTU3NjM1Mn0.O2q3gDPmmEnA_zFc2EzbUaELHlKk3KtfU1bugGISBD0
+  - name: Cookie
+    value: connect.sid=s%3AeYN1_XCn1Dfd6ZjXefbRnTDesXNTXmB3.F5RzyZMM5BUFs0%2F8XxN1exphhOthR6P1z2FecbXJMhs
+authentication: {}
+metaSortKey: -1665665390971
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

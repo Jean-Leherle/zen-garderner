@@ -1,0 +1,38 @@
+_id: req_cf452011b8b8457e860fe67f76b738b2
+type: Request
+parentId: wrk_933cf9c35fc44dcdb5dc6da6b735e58b
+modified: 1665665390965
+created: 1665665390965
+url: https://zen-gardener-api.herokuapp.com/tasks
+name: D add tasks empty
+description: ""
+method: POST
+body:
+  mimeType: application/x-www-form-urlencoded
+  params:
+    - name: label
+      value: ""
+    - name: begin_date
+      value: ""
+    - name: limit_date
+      value: ""
+    - name: sheet_id
+      value: ""
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/x-www-form-urlencoded
+  - name: Authorization
+    value: Bearer
+      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMSIsImlhdCI6MTY2NTY2MzUwMX0.7U8YF9nOXLhKXy2RY1pcaK8jOfWZ3Hj08BoEPiNX7T4
+  - name: Cookie
+    value: connect.sid=s%3AFjMpriKMU0oQuprBY-7dF3BUJvVNpDvO.JCwsy2jcjNbNZygRteVzNP0%2BnnGLVoWcNMez5f054b8
+authentication: {}
+metaSortKey: -1665665390965
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

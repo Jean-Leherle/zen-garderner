@@ -1,0 +1,58 @@
+_id: req_9de976cc4b924fcaabdf19fa8d26b424
+type: Request
+parentId: wrk_933cf9c35fc44dcdb5dc6da6b735e58b
+modified: 1665665390983
+created: 1665665390983
+url: http://localhost:3000/sheets/
+name: create new sheet
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    [
+          {
+            "title": "aubergine",
+            "description": "lorem ipsum",
+            "photo": "aubergine.png",
+            "caracteristique": "lorem ipsum",
+            "categories": [
+              {
+                "label": "légumes"
+              },
+    					{
+                "label": "difficile"
+              }
+            ],
+            "actions": [
+              {
+                "label": "déserber",
+                "month_begin": 6,
+                "month_limit": 8
+              },
+    					{
+                "label": "tondre",
+                "month_begin": 5,
+                "month_limit": 7
+              }
+            ]
+          }
+        ]
+parameters: []
+headers:
+  - name: Authorization
+    value: Bearer
+      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMyIsImlhdCI6MTY2NDg4OTA2N30.LKm3-w0k2XrbNApVzzYRGPP67ZkAYgzPeJLUzYZE0pU
+  - name: Content-Type
+    value: application/json
+  - name: Cookie
+    value: connect.sid=s%3AeYN1_XCn1Dfd6ZjXefbRnTDesXNTXmB3.F5RzyZMM5BUFs0%2F8XxN1exphhOthR6P1z2FecbXJMhs
+authentication: {}
+metaSortKey: -1665665390983
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

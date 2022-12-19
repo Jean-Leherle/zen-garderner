@@ -1,0 +1,28 @@
+_id: req_6ac5553e29fd44ff9b2e427d0b9f9cbd
+type: Request
+parentId: wrk_933cf9c35fc44dcdb5dc6da6b735e58b
+modified: 1665665390973
+created: 1665665390973
+url: https://zen-gardener-api.herokuapp.com/tasks/60
+name: D delete a tasks
+description: ""
+method: DELETE
+body:
+  mimeType: ""
+  text: ""
+parameters: []
+headers:
+  - name: Authorization
+    value: Bearer
+      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMSIsImlhdCI6MTY2NTY2MzUwMX0.7U8YF9nOXLhKXy2RY1pcaK8jOfWZ3Hj08BoEPiNX7T4
+  - name: Cookie
+    value: connect.sid=s%3AFjMpriKMU0oQuprBY-7dF3BUJvVNpDvO.JCwsy2jcjNbNZygRteVzNP0%2BnnGLVoWcNMez5f054b8
+authentication: {}
+metaSortKey: -1665665390973
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

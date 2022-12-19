@@ -1,0 +1,28 @@
+_id: req_26f3272dd6054b189d33bb681a79e89a
+type: Request
+parentId: wrk_933cf9c35fc44dcdb5dc6da6b735e58b
+modified: 1665665390968
+created: 1665665390968
+url: https://zen-gardener-api.herokuapp.com/tasks
+name: D all tasks by user
+description: ""
+method: GET
+body:
+  mimeType: ""
+  text: ""
+parameters: []
+headers:
+  - name: Authorization
+    value: Bearer
+      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMSIsImlhdCI6MTY2NTY2MzUwMX0.7U8YF9nOXLhKXy2RY1pcaK8jOfWZ3Hj08BoEPiNX7T4
+  - name: Cookie
+    value: connect.sid=s%3AFjMpriKMU0oQuprBY-7dF3BUJvVNpDvO.JCwsy2jcjNbNZygRteVzNP0%2BnnGLVoWcNMez5f054b8
+authentication: {}
+metaSortKey: -1665665390968
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

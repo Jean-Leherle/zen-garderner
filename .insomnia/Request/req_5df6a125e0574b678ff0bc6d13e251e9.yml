@@ -1,0 +1,25 @@
+_id: req_5df6a125e0574b678ff0bc6d13e251e9
+type: Request
+parentId: wrk_933cf9c35fc44dcdb5dc6da6b735e58b
+modified: 1665665390986
+created: 1665665390986
+url: http://localhost:3000/sheets/public?n=7
+name: get random sheets
+description: ""
+method: GET
+body:
+  mimeType: ""
+  text: ""
+parameters: []
+headers:
+  - name: Cookie
+    value: connect.sid=s%3AeYN1_XCn1Dfd6ZjXefbRnTDesXNTXmB3.F5RzyZMM5BUFs0%2F8XxN1exphhOthR6P1z2FecbXJMhs
+authentication: {}
+metaSortKey: -1665665390986
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

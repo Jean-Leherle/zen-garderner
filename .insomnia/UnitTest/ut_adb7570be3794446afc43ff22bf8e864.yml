@@ -1,0 +1,10 @@
+_id: ut_adb7570be3794446afc43ff22bf8e864
+type: UnitTest
+parentId: uts_d74a58df55e04e47bd31e350d6e4ba1f
+modified: 1671468181413
+created: 1665665655068
+requestId: req_c582e5304ba54413bbda6431a47c22e2
+name: get sheet by id
+code: |-
+  const response1 = await insomnia.send();
+  expect(response1.status).to.equal(200);

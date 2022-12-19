@@ -1,0 +1,40 @@
+_id: req_856db3515aa64b839e807a3967614e6d
+type: Request
+parentId: wrk_933cf9c35fc44dcdb5dc6da6b735e58b
+modified: 1665665390977
+created: 1665665390977
+url: http://localhost:3000/member
+name: update user
+description: ""
+method: PATCH
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"pseudo": "Olivir",
+    	"email": "olivir@pro.fr",
+    	"address": "rue du bug",
+    	"zip_code": "45125",
+    	"city": "pari",
+    	"phone": "0556578920",
+    	"task_notification": false,
+    	"week_notification": true
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+  - name: Authorization
+    value: Bearer
+      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMSIsImlhdCI6MTY2NTEyNjY0NH0.NCtYQJ_8JVzbCCAqe74fQwTs97gOka8hnCOP6aKa8Zs
+  - name: Cookie
+    value: connect.sid=s%3AeYN1_XCn1Dfd6ZjXefbRnTDesXNTXmB3.F5RzyZMM5BUFs0%2F8XxN1exphhOthR6P1z2FecbXJMhs
+authentication: {}
+metaSortKey: -1665665390977
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

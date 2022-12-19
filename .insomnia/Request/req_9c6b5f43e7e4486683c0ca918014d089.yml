@@ -1,0 +1,46 @@
+_id: req_9c6b5f43e7e4486683c0ca918014d089
+type: Request
+parentId: wrk_933cf9c35fc44dcdb5dc6da6b735e58b
+modified: 1665665390978
+created: 1665665390978
+url: https://zen-gardener-api.herokuapp.com/member
+name: D update user
+description: ""
+method: PATCH
+body:
+  mimeType: application/x-www-form-urlencoded
+  params:
+    - name: pseudo
+      value: bob
+    - name: email
+      value: bob@bob.bob
+    - name: address
+      value: rue de bob
+    - name: zip_code
+      value: "11808"
+    - name: city
+      value: bobLand
+    - name: phone
+      value: "0544554412"
+    - name: task_notification
+      value: "false"
+    - name: week_notification
+      value: "false"
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/x-www-form-urlencoded
+  - name: Authorization
+    value: Bearer
+      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMSIsImlhdCI6MTY2NTEzMDUzM30.vAjG-9NzPHcdNx7wo8Je47-kUEz53tkWVE4xzrcZETc
+  - name: Cookie
+    value: connect.sid=s%3AFjMpriKMU0oQuprBY-7dF3BUJvVNpDvO.JCwsy2jcjNbNZygRteVzNP0%2BnnGLVoWcNMez5f054b8
+authentication: {}
+metaSortKey: -1665665390978
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

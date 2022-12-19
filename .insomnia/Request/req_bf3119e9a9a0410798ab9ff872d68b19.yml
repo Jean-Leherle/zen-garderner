@@ -1,0 +1,58 @@
+_id: req_bf3119e9a9a0410798ab9ff872d68b19
+type: Request
+parentId: wrk_933cf9c35fc44dcdb5dc6da6b735e58b
+modified: 1665665390989
+created: 1665665390989
+url: https://zen-gardener-api.herokuapp.com/sheets/
+name: D create new sheet
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    [
+          {
+            "title": "aubergine",
+            "description": "lorem ipsum",
+            "photo": "aubergine.png",
+            "caracteristique": "[soleil : beaucoup][eau : pas beaucoup]",
+            "categories": [
+              {
+                "label": "légumes"
+              },
+    					{
+                "label": "difficile"
+              }
+            ],
+            "actions": [
+              {
+                "label": "déserber",
+                "month_begin": 6,
+                "month_limit": 8
+              },
+    					{
+                "label": "tondre",
+                "month_begin": 5,
+                "month_limit": 7
+              }
+            ]
+          }
+        ]
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+  - name: Authorization
+    value: Bearer
+      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNiIsImlhdCI6MTY2NTEyNjgyMX0.RofAGiuv_Erd5fEIFHXvxTO40im3KihVnuXtfCxyC10
+  - name: Cookie
+    value: connect.sid=s%3AFjMpriKMU0oQuprBY-7dF3BUJvVNpDvO.JCwsy2jcjNbNZygRteVzNP0%2BnnGLVoWcNMez5f054b8
+authentication: {}
+metaSortKey: -1665665390989
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

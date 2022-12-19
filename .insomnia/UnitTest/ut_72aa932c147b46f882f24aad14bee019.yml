@@ -1,0 +1,10 @@
+_id: ut_72aa932c147b46f882f24aad14bee019
+type: UnitTest
+parentId: uts_d74a58df55e04e47bd31e350d6e4ba1f
+modified: 1671468184549
+created: 1665665800204
+requestId: req_6bd1f4a98d79436e9f20686a0145d9b0
+name: get favorite
+code: |-
+  const response1 = await insomnia.send();
+  expect(response1.status).to.equal(200);
